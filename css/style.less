@@ -1,0 +1,246 @@
+@charset "UTF-8";
+@import "common/normalize.less";
+@import "common/style.less";
+@import "common/color.less";
+/* LESS Document */
+
+body{
+	display:block;
+	margin:0 auto;
+	.bgColor(@black,1);
+}
+
+a{
+	color:blue;
+}
+
+#wrapper{
+	display:block;
+	width:640px;
+	position:relative;
+	margin: 0 auto;
+	padding:0;
+	overflow:hidden;
+}
+#header{
+	position:relative;
+	width:640px;
+	height:126px;
+	margin:0;
+	padding:0;
+	background:url(../img/headerBg.png) no-repeat;
+	h1{
+		.fontNormal(21px);
+		color:@white;
+		text-align:center;
+		margin:0 auto;
+		padding: 0;	
+	}
+}
+
+#content{
+	position:relative;
+	background:url(../img/background.png) no-repeat;	
+	width:640px;
+	height:1136px;
+	margin:0;
+	padding:0;
+}
+
+
+#bubbleContainer{
+	margin:0;
+	padding:0;
+	#bubbleLists{
+		margin:0;
+		padding:0;
+		width:640px;
+		height:500px;
+		list-style:none;
+		.clearfix;
+		overflow-x:hidden;
+		overflow-y:scroll;
+		/*scrollbar*/
+		&::-webkit-scrollbar {
+          overflow: hidden;
+          width: 0px;
+        }
+
+        &::-webkit-scrollbar:vertical {
+          width: 5px;
+        }
+
+        &::-webkit-scrollbar:horizontal {
+          display: none;
+        }
+
+        &::-webkit-scrollbar-track {
+         // -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+        //  background: lighten(@black, 50%);
+           .borderRadius(4px);
+        }
+
+        &::-webkit-scrollbar-button {
+          display: none;
+        }
+
+        &::-webkit-scrollbar-thumb {
+         .borderRadius(4px);
+          .bgColor (lighten(@black, 30%), .5);
+        }
+
+        &::-webkit-scrollbar-thumb:window-inactive {
+          //background: rgba(255, 255, 255, 0);
+        }
+
+        &::-webkit-scrollbar-corner {
+          display: none;
+        }
+
+        &::-webkit-resizer {
+          display: none;
+          resize: none;
+        }
+		
+		li{
+			
+			&.left_bubble{
+				width:640px;
+				overflow:hidden;
+				padding:20px;
+				.clearfix;
+				img.icon{
+				 width:88px;
+				 height:88px;
+				 float:left;	
+				}
+				.bubble_bg{
+					position:relative;
+					float:left;
+					display:block;
+					width:auto;
+					max-width:410px;
+					height:auto;
+					margin:10px 20px;
+					.bgColor(@white,1);
+					.borderRadius(10px);
+					.boxShadow(0,1px,0,1px,@black,.05);
+					/*検討*/
+					p{
+						.fontNormal(28px);
+						line-height:32px;
+						margin:0;
+						padding:4px 10px;
+						color:@black;
+						//.bgColor(@white,1);
+					}
+					&:before{
+						content:'';
+						position:absolute;
+						width: 0; 
+						height: 0; 
+						left:-10px;
+						top:10px;
+						border-bottom: 10px solid transparent;  /* left arrow slant */
+						border-top: 10px solid transparent; /* right arrow slant */
+						border-right: 10px solid #fff; /* bottom, add background color here */
+						font-size: 0;
+						line-height: 0;
+					}
+				}
+				
+				.kidoku{
+					display:block;
+					width:auto;
+					height:20px;
+					clear:left;
+					margin:4px 0 0 100px;
+					padding:4px 0 0 0;
+					background:url(../img/kidoku.png) no-repeat left center;
+					span{
+						.fontNormal(18px);
+						line-height:14px;
+						margin:0;
+						padding:0;
+						color:lighten(@black,55%);
+						margin:2px 0 0 65px;
+					}
+				}
+			}
+			
+			&.right_bubble{
+				position:relative;
+				width:auto;
+				padding:20px;
+				.clearfix;
+				
+				img.icon{
+				 width:88px;
+				 height:88px;
+				 float:right;	
+				}
+				.bubble_bg{
+					
+					float:right;
+					display:block;
+					width:auto;
+					max-width:410px;
+					height:auto;
+					margin:10px 0px 10px 20px;
+					.bgColor(@white,1);
+					.borderRadius(10px);
+					.boxShadow(0,1px,0,1px,@black,.05);
+					/*検討*/
+					p{
+						.fontNormal(28px);
+						line-height:32px;
+						margin:0;
+						padding:4px;
+						color:@black;
+						//.bgColor(@white,1);
+					}
+					&:before{
+						content:'';
+						position:absolute;
+						width: 0; 
+						height: 0; 
+						right:12px;
+						top:40px;
+						border-bottom: 10px solid transparent;  /* left arrow slant */
+						border-top: 10px solid transparent; /* right arrow slant */
+						border-left: 10px solid #fff; /* bottom, add background color here */
+						font-size: 0;
+						line-height: 0;
+					}
+				}
+				
+				.kidoku{
+					display:block;
+					width:auto;
+					height:20px;
+					clear:right;
+					margin:4px 0 0 450px;
+					padding:4px 0 0 0;
+					background:url(../img/kidoku.png) no-repeat left center;
+					span{
+						.fontNormal(18px);
+						line-height:14px;
+						margin:0;
+						padding:0;
+						color:lighten(@black,55%);
+						margin:2px 0 0 65px;
+					}
+				}
+				
+			}
+			
+		}
+	}
+}
+
+
+/*hr*/
+.hr_start{
+	display:block;
+	padding:15px 0 0 0;
+}
