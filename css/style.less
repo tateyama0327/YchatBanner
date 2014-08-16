@@ -22,14 +22,18 @@ a{
 	padding:0;
 	overflow:hidden;
 }
+
 #header{
-	position:relative;
+	position:fixed;
 	width:320px;
-	height:63px;
+	height:46px;
 	margin:0;
 	padding:0;
+	top:0;
+	z-index:10000;
 	background:url(../img/headerBg.png) no-repeat;
-	background-size: 320px 64px;
+	background-size: 320px 46px;
+	-webkit-background-size: 320px 46px;
 	h1{
 		.fontNormal(15px);
 		color:@white;
@@ -41,26 +45,22 @@ a{
 
 #content{
 	position:relative;
-	background:url(../img/background.png) no-repeat;	
+	background:url(../img/background.png) ;	
 	width:320px;
 	margin:0;
 	padding:0;
+	top:46px;//header差分
 	background-size: 320px;
 }
 
 
 #bubbleContainer{
+	width:320px;
 	margin:0;
 	padding:0;
-	#bubbleLists{
-		margin:0;
-		padding:0;
-		width:320px;
-		height:200px;
-		list-style:none;
-		.clearfix;
-		overflow-x:hidden;
-		overflow-y:scroll;
+	min-height:200px;
+	overflow-x:hidden;
+	overflow-y:scroll;
 		/*scrollbar*/
 		&::-webkit-scrollbar {
           overflow: hidden;
@@ -102,6 +102,16 @@ a{
           display: none;
           resize: none;
         }
+		
+		
+	#bubbleLists{
+		margin:0;
+		padding:0;
+		width:320px;
+		//height:200px;
+		list-style:none;
+		.clearfix;
+		
 		
 		li{
 			

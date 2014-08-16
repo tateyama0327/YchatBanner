@@ -26,21 +26,19 @@
 <div id="wrapper">
 	<div id="header">
 		<!--head-->
-		<h1>00:18</h1><!--ここに現在時刻-->
+		<!--<h1>00:18</h1>ここに現在時刻-->
 	</div>
-	<div id="scrollWrapper">
-		<div class="scroller">
-			<div id="content">
-				<div id="bubbleContainer">
-					<div class="message">
-						<img class="hr_start" src="img/chatstart.png"/>   
-					 </div>
-					<ul id="bubbleLists">
-					</ul><!--bubbleLists fin-->
-				 </div>
-			</div>
-		</div>
-	</div>
+
+	<div id="content"><!--content-->
+		<div id="bubbleContainer">
+			<div class="message">
+				<img class="hr_start" src="img/chatstart.png"/>   
+			 </div>
+			<ul id="bubbleLists">
+			</ul><!--bubbleLists fin-->
+		 </div>
+	</div><!--content fin-->
+
 	<div class="fixedFeild">
 		<div id="out_textFeild" class="textFeild clearfix"></div>
 	</div>
@@ -62,7 +60,7 @@
 				 </div>			
 		{{else}}
 			<li class="left_bubble">
-				<img class="icon" src="img/yahooIcon.png"/>
+				<img class="icon" src="img/yahooIcon_red.png"/>
 				<div class="bubble_bg">
 					<p>{{:contents}}</p>
 				 </div>
@@ -71,6 +69,7 @@
 			</li><!--right_bubble fin-->
 	{{/for}}
 </script>
+
 <!-- 解答用ボタンテンプレート部分 -->
 <script id="tmpl_answerBtn" type="text/x-jsrender">
 	<div class="answerBtn">
