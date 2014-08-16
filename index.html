@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.00, minimum-scale=1.00, maximum-scale=1.00, user-scalable=no" />
+
 <meta name="format-detection" content="telephone=no" />
 <link href="css/static.css" type="text/css" rel="stylesheet" />
 <link href="css/style.css" type="text/css" rel="stylesheet" />
@@ -14,97 +15,11 @@
 <script src="js/iscroll.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
 <script type="text/javascript"><!--resizer-->
-	// $(window).bind("resize", function(){
-	// 	$("html").css( "zoom" , $(window).width() / 320 );
-	// }).trigger("resize");
+	$(window).bind("resize", function(){
+		$("html").css( "zoom" , $(window).width() / 320 );
+	}).trigger("resize");
 </script>
 <!--resizer-->
-<style type="text/css">
-	.fixedFeild{
-		position: absolute;
-		bottom: 0px;
-		height: auto;
-		width: 640px;
-		background-color: #f00;
-		z-index: 5;
-	}
-	.css3button {
-		font-family: Arial, Helvetica, sans-serif;
-		font-size: 13px;
-		color: #ffffff;
-		padding: 10px 20px;
-		background: -moz-linear-gradient(
-			top,
-			#ffffff 0%,
-			#82e889 25%,
-			#62db25 75%,
-			#1dad3a);
-		background: -webkit-gradient(
-			linear, left top, left bottom,
-			from(#ffffff),
-			color-stop(0.25, #82e889),
-			color-stop(0.75, #62db25),
-			to(#1dad3a));
-		-webkit-border-radius: 15px;
-		border-radius: 15px;
-		border: 1px solid #25ad64;
-		-webkit-box-shadow:
-			0px 1px 0px rgba(43,179,59,0.4),
-			inset 0px 0px 1px rgba(255,255,255,0.7);
-		box-shadow:
-			0px 1px 0px rgba(43,179,59,0.4),
-			inset 0px 0px 1px rgba(255,255,255,0.7);
-		text-shadow:
-			0px -1px 0px rgba(000,000,000,0.4),
-			0px 0px 0px rgba(255,255,255,0.3);
-	}
-	#postBtn{
-		float: right;
-	}
-	#plusBtn{
-		float: left;
-		width: 60px;
-		height: 60px;
-		border-radius: 20px;
-		background-color: #000;
-		margin-right: 10px;
-		position: relative;
-	}
-	#plusBtn:after{
-		content: '+';
-		position: absolute;
-		top: -14px;
-		left: 6px;
-		font-size: 80px;
-	}
-	#textFeild{
-		padding: 10px;
-	}
-	#stampFeild{
-		height: 200px;
-		background-color: rgba(0,0,0,0.5);
-		width: 100%;
-	}
-	.clearfix:after {  
-	  content: ".";   
-	  display: block;   
-	  height: 0;   
-	  clear: both;   
-	  visibility: hidden;  
-	}
-	#scrollWrapper {
-		position:relative;
-		z-index:1;
-		width:100% ;
-		overflow:hidden;
-	}
-	.none{
-		display: none;
-	}
-	.block{
-		display: block;
-	}
-</style>
 </head>
 <body>
 <div id="wrapper">
@@ -126,25 +41,16 @@
 		</div>
 	</div>
 	<div class="fixedFeild">
-		<div id="textFeild" class="clearfix">
-			<div class="css3button" id="plusBtn"></div>
-			<textarea cols="90" rows="3"></textarea>
-			<div id="postBtn">
-				<button class="css3button">投稿</button>
-			</div>
-		</div>
-		<div id="stampFeild" class="none">
-			<div class="stamp">
-				<img src="img/stamp/stamp1.png" width="200">
-			</div>
+		<div id="out_textFeild" class="textFeild clearfix">
+
 		</div>
 	</div>
 </div><!--wrapper fin-->
 
 
 
-<!-- テンプレート部分 -->
-<script id="talkDataTemplate" type="text/x-jsrender">
+<!-- チャットバルーンテンプレート部分 -->
+<script id="talkDataTmpl" type="text/x-jsrender">
 	{{for data}}
 		{{if isMytalk}}
 			<li class="right_bubble">
@@ -167,23 +73,32 @@
 			</li><!--right_bubble fin-->
 	{{/for}}
 </script>
+<!-- 解答用ボタンテンプレート部分 -->
+<script id="tmpl_answerBtn" type="text/x-jsrender">
+	<div class="answerBtn">
+		{{for data}}
+			<span class="css3button">{{:contents}}</span>
+		{{/for}}
+	</div>
+</script>
+
 
 <script>
-	var myScroll;
-	var a = 0;
-	function loaded() {
-		setHeight();
-		myScroll = new iScroll('scroller', {desktopCompatibility:true});
-	}
-	function setHeight() {
-		var headerH = document.getElementById('header').offsetHeight,
-			footerH = document.getElementById('footer').offsetHeight,
-			wrapperH = window.innerHeight - headerH - footerH;
-		document.getElementById('wrapper').style.height = wrapperH + 'px';
-	}
-	window.addEventListener('onorientationchange' in window ? 'orientationchange' : 'resize', setHeight, false);
-	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-	document.addEventListener('DOMContentLoaded', loaded, false);
+	// var myScroll;
+	// var a = 0;
+	// function loaded() {
+	// 	setHeight();
+	// 	myScroll = new iScroll('scroller', {desktopCompatibility:true});
+	// }
+	// function setHeight() {
+	// 	var headerH = document.getElementById('header').offsetHeight,
+	// 		footerH = document.getElementById('footer').offsetHeight,
+	// 		wrapperH = window.innerHeight - headerH - footerH;
+	// 	document.getElementById('wrapper').style.height = wrapperH + 'px';
+	// }
+	// window.addEventListener('onorientationchange' in window ? 'orientationchange' : 'resize', setHeight, false);
+	// document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+	// document.addEventListener('DOMContentLoaded', loaded, false);
 </script>
 
 </body>

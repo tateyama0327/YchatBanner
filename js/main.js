@@ -1,9 +1,11 @@
 ﻿(function(window, undefined) {
     var yahooChat = window.yahooChat || {};
 
-    // iscroll関連
-    yahooChat.iscrollFunc = {
-        init : function(){
+    // 画面の調整
+    yahooChat.displayFunc = {
+        init : function(options){
+            $.extend(this, options);
+            this.$contentEl.css( "height" , ($(window).height()-113) );
         }
     };
 
@@ -11,23 +13,19 @@
     yahooChat.yahooPostFunc = {
         init : function(options){
             $.extend(this, options);
-            this.postFirst();
         },
-        postFirst : function(){
-            this.postMessage();
-        },
-        postMessage : function(){
+        postMessage : function(options){
             var self = this;
             var _talkData = {};
             _talkData.data = [];
             _talkData.data.push({
                 isMytalk: false,
-                contents: '何か悩みでもある？',
+                contents: options.contents,
                 time: '18:30'
             });
-            this.$listsEl.append(
+            this.$output.append(
                 //テンプレートにデータを渡して、レンダリングする
-                self.$messageTemplate.render(_talkData)
+                self.$template.render(_talkData)
             );
         }
     };
@@ -60,13 +58,13 @@
                 contents: _postComment,
                 time: '18:30'
             });
-            this.$listsEl.append(
+            this.$output.append(
                 //テンプレートにデータを渡して、レンダリングする
-                self.$messageTemplate.render(_talkData)
+                self.$template.render(_talkData)
             );
         }
     };
-
+    // スタンプ投稿制御
     yahooChat.stampFunc = {
         init : function(options){
             $.extend(this, options);
@@ -94,30 +92,102 @@
                 contents: 'aaaaa',
                 time: '18:30'
             });
-            this.$listsEl.append(
+            this.$output.append(
                 //テンプレートにデータを渡して、レンダリングする
-                self.$messageTemplate.render(_talkData)
+                self.$template.render(_talkData)
+            );
+        }
+    };
+    //
+    yahooChat.answerBtnFunc = {
+        init : function(options){
+            $.extend(this, options);
+            this.setEvent();
+            this.postAnswer();
+        },
+        setEvent : function(){
+        },
+        showFeild : function(){
+            this.$stampFeildEl.toggleClass('none');
+        },
+        postAnswer : function(){
+            var self = this;
+            var _renderData = {};
+            _renderData.data = [];
+            for(var i = 0, len = 3; i < 3; i++){
+                _renderData.data.push({
+                    isMytalk: false,
+                    isStamp: true,
+                    contents: 'aaaaa',
+                });
+            }
+            this.$output.html(
+                //テンプレートにデータを渡して、レンダリングする
+                self.$template.render(_renderData)
             );
         }
     };
 
+    // yahoo側自動chat制御系
+    yahooChat.controlFunc = {
+        init : function(options){
+            $.extend(this, options);
+            this.firstChat();
+        },
+        firstChat : function(){
+            var self = this;
+            this.postTimeFunc(function(){
+
+                self.yahooFunc.postMessage({
+                    contents: 'ああああああ'
+                })
+
+            },1500);
+        },
+        postTimeFunc : function(func,sec){
+            setTimeout(function(){
+                func();
+            },sec);
+        }
+    };
+
+
     window.yahooChat = yahooChat;
     $(function(){
-        yahooChat.yahooPostFunc.init({
-            $listsEl : $('#bubbleLists'),
-            $messageTemplate : $('#talkDataTemplate')
+
+        // 端末の画面幅によって表示幅変更
+        yahooChat.displayFunc.init({
+            $contentEl : $('#bubbleLists')
         });
-        yahooChat.postFunc.init({
-            $btnEl : $('#postBtn'),
-            $listsEl : $('#bubbleLists'),
-            $textAreaEl : $('#textFeild'),
-            $messageTemplate : $('#talkDataTemplate')
+
+        //yahoo側のチャット制御
+         yahooChat.yahooPostFunc.init({
+            $output : $('#bubbleLists'),
+            $template : $('#talkDataTmpl')
         });
-        yahooChat.stampFunc.init({
-            $btnEl : $('#plusBtn'),
+
+        yahooChat.controlFunc.init({
+            yahooFunc : yahooChat.yahooPostFunc
+        });
+
+        // yahooChat.postFunc.init({
+        //     $btnEl : $('#postBtn'),
+        //     $output : $('#bubbleLists'),
+        //     $textAreaEl : $('#textFeild'),
+        //     $template : $('#talkDataTmpl')
+        // });
+        // yahooChat.stampFunc.init({
+        //     $btnEl : $('#plusBtn'),
+        //     $stampFeildEl : $('#stampFeild'),
+        //     $output : $('#bubbleLists'),
+        //     $template : $('#talkDataTmpl')
+        // });
+
+        //アンサーボタン初期化
+        yahooChat.answerBtnFunc.init({
             $stampFeildEl : $('#stampFeild'),
-            $listsEl : $('#bubbleLists'),
-            $messageTemplate : $('#talkDataTemplate')
+            $output : $('#out_textFeild'),
+            $template : $('#tmpl_answerBtn')
         });
     });
 

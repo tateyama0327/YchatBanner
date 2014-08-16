@@ -1,0 +1,23 @@
+{
+    "data": {
+        "yahooChat": [
+            {
+                "personColor": "red",
+                "talk": "オッス！オラ！Yahoo! レッド！",
+                "userChoiceType": 1, 
+                "isChange": true
+            },
+            {
+                "personColor": "red",
+                "talk": "オッス！オラ！Yahoo! レッド！",
+                "userChoiceType": 1, 
+                "isChange": true
+            }
+        ],
+        "userAnswerBtn": {
+            "1" : ["こんにちは","ハロー","あほー"],
+            "2" : ["あかん","くそ","まじ無理"],
+            "3" : ["おこ","激おこ","ムカ着火ファイヤー"]
+        }
+    }
+}
