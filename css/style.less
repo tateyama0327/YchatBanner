@@ -16,7 +16,7 @@ a{
 
 #wrapper{
 	display:block;
-	width:640px;
+	width:320px;
 	position:relative;
 	margin: 0 auto;
 	padding:0;
@@ -24,13 +24,14 @@ a{
 }
 #header{
 	position:relative;
-	width:640px;
-	height:126px;
+	width:320px;
+	height:63px;
 	margin:0;
 	padding:0;
 	background:url(../img/headerBg.png) no-repeat;
+	background-size: 320px 64px;
 	h1{
-		.fontNormal(21px);
+		.fontNormal(15px);
 		color:@white;
 		text-align:center;
 		margin:0 auto;
@@ -41,10 +42,10 @@ a{
 #content{
 	position:relative;
 	background:url(../img/background.png) no-repeat;	
-	width:640px;
-	height:1136px;
+	width:320px;
 	margin:0;
 	padding:0;
+	background-size: 320px;
 }
 
 
@@ -54,8 +55,8 @@ a{
 	#bubbleLists{
 		margin:0;
 		padding:0;
-		width:640px;
-		height:500px;
+		width:320px;
+		height:200px;
 		list-style:none;
 		.clearfix;
 		overflow-x:hidden;
@@ -105,13 +106,13 @@ a{
 		li{
 			
 			&.left_bubble{
-				width:640px;
+				width:320px;
 				overflow:hidden;
 				padding:20px;
 				.clearfix;
 				img.icon{
-				 width:88px;
-				 height:88px;
+				 width:44px;
+				 height:44px;
 				 float:left;	
 				}
 				.bubble_bg{
@@ -119,7 +120,7 @@ a{
 					float:left;
 					display:block;
 					width:auto;
-					max-width:410px;
+					max-width:205px;
 					height:auto;
 					margin:10px 20px;
 					.bgColor(@white,1);
@@ -127,7 +128,7 @@ a{
 					.boxShadow(0,1px,0,1px,@black,.05);
 					/*検討*/
 					p{
-						.fontNormal(28px);
+						.fontNormal(14px);
 						line-height:32px;
 						margin:0;
 						padding:4px 10px;
@@ -152,14 +153,15 @@ a{
 				.kidoku{
 					display:block;
 					width:auto;
-					height:20px;
+					height:10px;
 					clear:left;
 					margin:4px 0 0 100px;
 					padding:4px 0 0 0;
 					background:url(../img/kidoku.png) no-repeat left center;
+					background-size: 30px;
 					span{
-						.fontNormal(18px);
-						line-height:14px;
+						.fontNormal(9px);
+						line-height:7px;
 						margin:0;
 						padding:0;
 						color:lighten(@black,55%);
@@ -238,9 +240,88 @@ a{
 	}
 }
 
-
 /*hr*/
 .hr_start{
 	display:block;
 	padding:15px 0 0 0;
+	width: 320px;
+}
+
+
+/* 峯岸追記箇所 */
+.fixedFeild{
+	position: fixed;
+	bottom: 0px;
+	height: 50px;
+	width: 320px;
+	background-color: #f00;
+	z-index: 5;
+}
+.css3button {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #ffffff;
+	padding: 10px 20px;
+	background: -moz-linear-gradient(
+		top,
+		#ffffff 0%,
+		#82e889 25%,
+		#62db25 75%,
+		#1dad3a);
+	background: -webkit-gradient(
+		linear, left top, left bottom,
+		from(#ffffff),
+		color-stop(0.25, #82e889),
+		color-stop(0.75, #62db25),
+		to(#1dad3a));
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+	border: 1px solid #25ad64;
+	-webkit-box-shadow:
+		0px 1px 0px rgba(43,179,59,0.4),
+		inset 0px 0px 1px rgba(255,255,255,0.7);
+	box-shadow:
+		0px 1px 0px rgba(43,179,59,0.4),
+		inset 0px 0px 1px rgba(255,255,255,0.7);
+	text-shadow:
+		0px -1px 0px rgba(000,000,000,0.4),
+		0px 0px 0px rgba(255,255,255,0.3);
+}
+.plusBtn{
+	float: left;
+	width: 60px;
+	height: 60px;
+	border-radius: 20px;
+	background-color: #000;
+	margin-right: 10px;
+	position: relative;
+}
+.plusBtn:after{
+	content: '+';
+	position: absolute;
+	top: -14px;
+	left: 6px;
+	font-size: 80px;
+}
+.textFeild{
+	padding: 10px;
+}
+.clearfix:after {  
+  content: ".";   
+  display: block;   
+  height: 0;   
+  clear: both;   
+  visibility: hidden;  
+}
+#scrollWrapper {
+	position:relative;
+	z-index:1;
+	width:100% ;
+	overflow:hidden;
+}
+.none{
+	display: none;
+}
+.block{
+	display: block;
 }
