@@ -98,19 +98,18 @@
             );
         }
     };
-    //
+    // 
     yahooChat.answerBtnFunc = {
         init : function(options){
             $.extend(this, options);
-            this.setEvent();
-            this.postAnswer();
-        },
-        setEvent : function(){
         },
         showFeild : function(){
             this.$stampFeildEl.toggleClass('none');
         },
-        postAnswer : function(){
+        postAnswer : function(data){
+            console.warn(data);
+            // var _rareQuestion = ;
+            // var _
             var self = this;
             var _renderData = {};
             _renderData.data = [];
@@ -132,21 +131,35 @@
     yahooChat.controlFunc = {
         init : function(options){
             $.extend(this, options);
-            this.firstChat();
+            var self = this;
+            this.getJson(function(){
+                //最初のchat呼び出し
+                self.firstChat(self.jsonData);
+            });
         },
-        firstChat : function(){
+        getJson : function(callback){
+            var self = this;
+            $.getJSON("chatData.json", function(data){
+                self.jsonData = data;
+                callback();
+            });
+        },
+        firstChat : function(data){
             var self = this;
             this.postTimeFunc(function(){
-
                 self.yahooFunc.postMessage({
-                    contents: 'ああああああ'
-                })
-
-            },1500);
+                    contents: data.chatData.ranger.red.talk[0].talkText
+                });
+            },500,function(){
+                self.answerBtnFunc.postAnswer(data);
+            });
         },
-        postTimeFunc : function(func,sec){
+        postTimeFunc : function(func,sec,callback){
             setTimeout(function(){
                 func();
+                setTimeout(function(){
+                    callback();
+                },sec);
             },sec);
         }
     };
@@ -166,8 +179,17 @@
             $template : $('#talkDataTmpl')
         });
 
+        //アンサーボタン初期化
+        yahooChat.answerBtnFunc.init({
+            $stampFeildEl : $('#stampFeild'),
+            $output : $('#out_textFeild'),
+            $template : $('#tmpl_answerBtn')
+        });
+
+        //チャット自動制御系(コントローラー)
         yahooChat.controlFunc.init({
-            yahooFunc : yahooChat.yahooPostFunc
+            yahooFunc : yahooChat.yahooPostFunc,
+            answerBtnFunc : yahooChat.answerBtnFunc
         });
 
         // yahooChat.postFunc.init({
@@ -183,15 +205,7 @@
         //     $template : $('#talkDataTmpl')
         // });
 
-        //アンサーボタン初期化
-        yahooChat.answerBtnFunc.init({
-            $stampFeildEl : $('#stampFeild'),
-            $output : $('#out_textFeild'),
-            $template : $('#tmpl_answerBtn')
-        });
     });
-
-
 
     // jsRenderテスト
     // $(function(){
