@@ -107,9 +107,10 @@
             this.$stampFeildEl.toggleClass('none');
         },
         postAnswer : function(data){
-            console.warn(data);
-            // var _rareQuestion = ;
-            // var _
+            console.warn(data.chatData.questionList.rareQuestion);
+            var _rareQuestion = data.chatData.questionList.rareQuestion;
+            var _triviaQuestion = data.chatData.questionList.triviaQuestion;
+            var _seriousQuestion = data.chatData.questionList.seriousQuestion;
             var self = this;
             var _renderData = {};
             _renderData.data = [];
@@ -124,6 +125,10 @@
                 //テンプレートにデータを渡して、レンダリングする
                 self.$template.render(_renderData)
             );
+        },
+        randomNum : function(max,min){
+            //乱数生成(小数点あり)
+            return Math.random()*(max-min)+min;
         }
     };
 
