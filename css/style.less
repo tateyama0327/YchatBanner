@@ -45,11 +45,13 @@ a{
 
 #content{
 	position:relative;
-	background:url(../img/background.png) ;	
+	background: #eceeee ;	
 	width:320px;
+	height:100%;
 	margin:0;
 	padding:0;
-	top:46px;//header差分
+	top:46px; //header差分
+	bottom:0;
 	background-size: 320px;
 }
 
@@ -118,30 +120,32 @@ a{
 			&.left_bubble{
 				width:320px;
 				overflow:hidden;
-				padding:20px;
+				padding:10px;
 				.clearfix;
 				img.icon{
 				 width:44px;
 				 height:44px;
 				 float:left;	
+				 margin:0;
+				 padding:0;
 				}
 				.bubble_bg{
 					position:relative;
 					float:left;
 					display:block;
 					width:auto;
-					max-width:205px;
+					max-width:230px;
 					height:auto;
-					margin:10px 20px;
+					margin:2px 12px 5px 12px;
 					.bgColor(@white,1);
 					.borderRadius(10px);
 					.boxShadow(0,1px,0,1px,@black,.05);
 					/*検討*/
 					p{
 						.fontNormal(14px);
-						line-height:32px;
+						line-height:16px;
 						margin:0;
-						padding:4px 10px;
+						padding:10px 10px;
 						color:@black;
 						//.bgColor(@white,1);
 					}
@@ -150,32 +154,42 @@ a{
 						position:absolute;
 						width: 0; 
 						height: 0; 
-						left:-10px;
-						top:10px;
-						border-bottom: 10px solid transparent;  /* left arrow slant */
-						border-top: 10px solid transparent; /* right arrow slant */
-						border-right: 10px solid #fff; /* bottom, add background color here */
+						left:-4px;
+						top:7px;
+						border-bottom: 6px solid transparent;  /* left arrow slant */
+						border-top: 6px solid transparent; /* right arrow slant */
+						border-right: 6px solid #fff; /* bottom, add background color here */
 						font-size: 0;
 						line-height: 0;
 					}
 				}
-				
+				.username{
+					display:block;
+					.fontSmall;
+					margin:0;
+					padding:0 10px;
+					color:lighten(@black,55%);
+					.textShadow(0,1px,0,@white,.9);
+					float:left;
+				}
 				.kidoku{
 					display:block;
 					width:auto;
 					height:10px;
 					clear:left;
-					margin:4px 0 0 100px;
-					padding:4px 0 0 0;
+					line-height:10px;
+					margin:0px 0 0 54px;
+					padding:0 0 0 0;
 					background:url(../img/kidoku.png) no-repeat left center;
 					background-size: 30px;
+					.clearfix;
 					span{
 						.fontNormal(9px);
-						line-height:7px;
+						line-height:10px;
 						margin:0;
 						padding:0;
 						color:lighten(@black,55%);
-						margin:2px 0 0 65px;
+						margin:0px 0 0 32px;
 					}
 				}
 			}
@@ -218,9 +232,9 @@ a{
 						height: 0; 
 						right:12px;
 						top:40px;
-						border-bottom: 10px solid transparent;  /* left arrow slant */
-						border-top: 10px solid transparent; /* right arrow slant */
-						border-left: 10px solid #fff; /* bottom, add background color here */
+						border-bottom: 6px solid transparent;  /* left arrow slant */
+						border-top: 6px solid transparent; /* right arrow slant */
+						border-left: 6px solid #fff; /* bottom, add background color here */
 						font-size: 0;
 						line-height: 0;
 					}
