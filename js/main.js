@@ -19,7 +19,7 @@
             var _talkData = {};
             _talkData.data = [];
             _talkData.data.push({
-                isMytalk: false,
+                isMytalk: options.isMytalk,
                 contents: options.contents,
                 time: '18:30'
             });
@@ -103,36 +103,46 @@
         init : function(options){
             $.extend(this, options);
         },
-        showFeild : function(){
-            this.$stampFeildEl.toggleClass('none');
-        },
         postAnswer : function(data){
             var _rareQuestion = data.chatData.questionList.rareQuestion;
             var _triviaQuestion = data.chatData.questionList.triviaQuestion;
             var _seriousQuestion = data.chatData.questionList.seriousQuestion;
 
             var self = this;
-            var contents = '';
+            var _titleText = '';
+            var _categoryText = '';
             var _renderData = {};
             _renderData.data = [];
             for(var i = 0, len = 3; i < 3; i++){
+                var _randomNum = this.randomNum(3,0);
                 if(i === 0){
-                    contents = _rareQuestion[this.randomNum(2,0)].title;
+                    _titleText = _rareQuestion[_randomNum].title;
+                    _categoryText = 'rareQuestion';
                 }else if(i === 1){
-                    contents = _triviaQuestion[this.randomNum(2,0)].title;
+                    _titleText = _triviaQuestion[_randomNum].title;
+                    _categoryText = 'triviaQuestion';
                 }else{
-                    contents = _seriousQuestion[this.randomNum(2,0)].title;
+                    _titleText = _seriousQuestion[_randomNum].title;
+                    _categoryText = 'seriousQuestion';
                 }
                 _renderData.data.push({
                     isMytalk: false,
                     isStamp: true,
-                    contents: contents,
+                    title: _titleText,
+                    category: _categoryText,
+                    dataNum: _randomNum
                 });
             }
             this.$output.html(
                 //テンプレートにデータを渡して、レンダリングする
                 self.$template.render(_renderData)
             );
+            this.setEvent();
+        },
+        setEvent : function(){
+            this.$btnFeildEl.on('click',function(e){
+               yahooChat.controlFunc.answerBtnClickFunc(e.target);
+            });
         },
         randomNum : function(max,min){
             //乱数生成(小数点あり)
@@ -161,6 +171,7 @@
             var self = this;
             this.postTimeFunc(function(){
                 self.yahooFunc.postMessage({
+                    isMytalk: false,
                     contents: data.chatData.ranger.red.talk[0].talkText
                 });
             },500,function(){
@@ -174,6 +185,22 @@
                     callback();
                 },sec);
             },sec);
+        },
+        answerBtnClickFunc : function(target){
+            var self = this;
+            var _choiceData = this.jsonData.chatData.questionList[target.getAttribute('data-category')][target.getAttribute('data-num')];
+            //ヤフレンジャーのだれかが言葉を話す。
+            this.postTimeFunc(function(){
+                self.yahooFunc.postMessage({
+                    isMytalk: false,
+                    contents: self.jsonData.chatData.ranger.pink.talk[0].talkText
+                });
+            },500,function(){
+                self.yahooFunc.postMessage({
+                    isMytalk: false,
+                    contents: _choiceData.answer
+                });
+            });
         }
     };
 
@@ -192,14 +219,14 @@
             $template : $('#talkDataTmpl')
         });
 
-        //アンサーボタン初期化
+        //アンサーボタン制御
         yahooChat.answerBtnFunc.init({
-            $stampFeildEl : $('#stampFeild'),
+            $btnFeildEl : $('.js_answerBtn'),
             $output : $('#out_textFeild'),
             $template : $('#tmpl_answerBtn')
         });
 
-        //チャット自動制御系(コントローラー)
+        //チャット制御系(コントローラー)
         yahooChat.controlFunc.init({
             yahooFunc : yahooChat.yahooPostFunc,
             answerBtnFunc : yahooChat.answerBtnFunc

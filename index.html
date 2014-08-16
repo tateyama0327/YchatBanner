@@ -40,7 +40,10 @@
 	</div><!--content fin-->
 
 	<div class="fixedFeild">
-		<div id="out_textFeild" class="textFeild clearfix"></div>
+		<div class="textFeild clearfix">
+			<div id="out_textFeild" class="js_answerBtn answerBtn">
+			</div>
+		</div>
 	</div>
 </div><!--wrapper fin-->
 
@@ -73,11 +76,9 @@
 
 <!-- 解答用ボタンテンプレート部分 -->
 <script id="tmpl_answerBtn" type="text/x-jsrender">
-	<div class="answerBtn">
-		{{for data}}
-			<div class="css3button">{{:contents}}</div>
-		{{/for}}
-	</div>
+	{{for data}}
+		<div class="css3button" data-category="{{>category}}" data-num="{{>dataNum}}">{{:title}}</div>
+	{{/for}}
 </script>
 
 <script>
