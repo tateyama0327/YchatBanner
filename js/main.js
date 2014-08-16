@@ -107,18 +107,26 @@
             this.$stampFeildEl.toggleClass('none');
         },
         postAnswer : function(data){
-            console.warn(data.chatData.questionList.rareQuestion);
             var _rareQuestion = data.chatData.questionList.rareQuestion;
             var _triviaQuestion = data.chatData.questionList.triviaQuestion;
             var _seriousQuestion = data.chatData.questionList.seriousQuestion;
+
             var self = this;
+            var contents = '';
             var _renderData = {};
             _renderData.data = [];
             for(var i = 0, len = 3; i < 3; i++){
+                if(i === 0){
+                    contents = _rareQuestion[this.randomNum(2,0)].title;
+                }else if(i === 1){
+                    contents = _triviaQuestion[this.randomNum(2,0)].title;
+                }else{
+                    contents = _seriousQuestion[this.randomNum(2,0)].title;
+                }
                 _renderData.data.push({
                     isMytalk: false,
                     isStamp: true,
-                    contents: 'aaaaa',
+                    contents: contents,
                 });
             }
             this.$output.html(
@@ -128,7 +136,7 @@
         },
         randomNum : function(max,min){
             //乱数生成(小数点あり)
-            return Math.random()*(max-min)+min;
+            return Math.floor(Math.random()*(max-min)+min);
         }
     };
 
