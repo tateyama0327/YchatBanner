@@ -10,6 +10,28 @@
         }
     };
 
+    // イントロ部分
+    yahooChat.introFunc = {
+        init : function(options){
+            $.extend(this, options);
+            this.setEvent();
+        },
+        setEvent : function(){
+            var self = this;
+            this.$fixedBanner.on('click',function(){
+                self.$yahooHome.addClass('alphaHideAnime');
+                self.$yahooHome.on('webkitAnimationEnd',function(){
+                    self.$yahooHome.remove();
+                    self.$displayWrap.addClass('alphaShowAnime');
+                        //チャット制御系(コントローラー)
+                        yahooChat.controlFunc.init({
+                            yahooFunc : yahooChat.yahooPostFunc,
+                            answerBtnFunc : yahooChat.answerBtnFunc
+                        });
+                });
+            });
+        },
+    };
 
     // yahoo側の投稿制御
     yahooChat.yahooPostFunc = {
@@ -393,10 +415,11 @@
             $template : $('#tmpl_answerBtn')
         });
 
-        //チャット制御系(コントローラー)
-        yahooChat.controlFunc.init({
-            yahooFunc : yahooChat.yahooPostFunc,
-            answerBtnFunc : yahooChat.answerBtnFunc
+        // チャットイントロ部分
+        yahooChat.introFunc.init({
+            $displayWrap : $('.displayWrap'),
+            $yahooHome : $('.yahooHome'),
+            $fixedBanner : $('.fixedBanner')
         });
 
     });

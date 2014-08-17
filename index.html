@@ -15,35 +15,40 @@
 <script src="js/jsrender.min.js" type="text/javascript"></script>
 <script src="js/iscroll.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
-<script type="text/javascript"><!--resizer-->
-	$(window).bind("resize", function(){
-		$("html").css( "zoom" , $(window).width() / 320 );
-	}).trigger("resize");
-</script>
-<!--resizer-->
 </head>
 <body>
 <div id="wrapper">
-	<div id="header">
-		<!--head-->
-		<!--<h1>00:18</h1>ここに現在時刻-->
+
+	<div class="yahooHome">
+		<img src="img/yahooHome.png" width="320">
+		<div class="fixedBanner">
+			<img src="img/intro_comment.png">
+			<img src="img/intro_red.png">
+		</div>
 	</div>
 
-	<div id="content"><!--content-->
-		<div id="bubbleContainer">
-			<div class="message">
-				<img class="hr_start" src="img/chatstart.png"/>   
-			 </div>
-			<ul id="bubbleLists">
-			</ul><!--bubbleLists fin-->
-		 </div>
-	</div><!--content fin-->
+	<div class="displayWrap">
 
-	<div class="fixedFeild showAnimation">
-		<div class="textFeild clearfix">
-			<div id="out_textFeild" class="js_answerBtn answerBtn">
+		<div id="header">
+			<!--head-->
+		</div>
+		<div id="content"><!--content-->
+			<div id="bubbleContainer">
+				<div class="message">
+					<img class="hr_start" src="img/chatstart.png"/>   
+				 </div>
+				<ul id="bubbleLists">
+				</ul><!--bubbleLists fin-->
+			 </div>
+		</div><!--content fin-->
+
+		<div class="fixedFeild showAnimation">
+			<div class="textFeild clearfix">
+				<div id="out_textFeild" class="js_answerBtn answerBtn">
+				</div>
 			</div>
 		</div>
+
 	</div>
 </div><!--wrapper fin-->
 
