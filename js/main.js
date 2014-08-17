@@ -20,13 +20,20 @@
         postMessage : function(options){
             var self = this;
             var _talkData = {};
+
+            var now = new Date();
+            var hour = now.getHours(); // 時
+            var min = now.getMinutes(); // 分
+            if(hour < 10) { hour = "0" + hour; }
+            if(min < 10) { min = "0" + min; }
+
             _talkData.data = [];
             _talkData.data.push({
                 isStamp: options.isStamp,
                 isMytalk: options.isMytalk,
                 contents: options.contents,
                 stampName: options.stampName,
-                time: '18:30'
+                time: hour + ':' + min
             });
             this.$output.append(
                 //テンプレートにデータを渡して、レンダリングする
@@ -198,8 +205,10 @@
         answerBtnClickFunc : function(target){
             //質問のチョイス
             var self = this;
-            var _choiceData = this.jsonData.chatData.questionList[target.getAttribute('data-category')][target.getAttribute('data-num')];
+            var _choiceData = this.jsonData.chatData.questionList[target.parentNode.getAttribute('data-category')][target.parentNode.getAttribute('data-num')];
 
+
+            console.warn(_choiceData);
             //後で使うのでオブジェクトルートにキャッシュ
             this.choiceData = _choiceData;
 
