@@ -28,7 +28,7 @@
             "white": {
                 "talk": [
                     {
-                        "talkText": "オッス！オラ！Yahoo! レッド！",
+                        "talkText": "わんわん！！",
                         "changeUserFlg": true
                     },
                     {
@@ -40,7 +40,7 @@
             "green": {
                 "talk": [
                     {
-                        "talkText": "オッス！オラ！Yahoo! レッド！",
+                        "talkText": "いくわよ♂",
                         "changeUserFlg": true
                     },
                     {

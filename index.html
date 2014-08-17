@@ -52,20 +52,27 @@
 <script id="talkDataTmpl" type="text/x-jsrender">
 	{{for data}}
 		{{if isMytalk}}
-			<li class="right_bubble">
-					<div class="bubble_bg">
-					<p>{{:contents}}</p>
-				 </div>
-		{{else isStamp}}
-			<li class="left_bubble">
-				<p><img src="img/stamp/{{>stampName}}.png" width="200"></p>
+			{{if isStamp}}
+				<li class="right_bubble">
+					<p><img src="img/stamp/{{>stampName}}.png" width="100"></p>
+			{{else}}
+				<li class="right_bubble">
+						<div class="bubble_bg">
+						<p>{{:contents}}</p>
+					 </div>
+			{{/if}}
 		{{else}}
-			<li class="left_bubble">
-				<img class="icon" src="img/yahooIcon_red.png"/>
-				<p class="username">Yahoo!レッド</p>
-				<div class="bubble_bg">
-					<p>{{:contents}}</p>
-				 </div>
+			{{if isStamp}}
+				<li class="left_bubble">
+					<p><img src="img/stamp/{{>stampName}}.png" width="100"></p>
+			{{else}}
+				<li class="left_bubble">
+					<img class="icon" src="img/yahooIcon_red.png"/>
+					<p class="username">Yahoo!レッド</p>
+					<div class="bubble_bg">
+						<p>{{:contents}}</p>
+					 </div>
+			{{/if}}
 		{{/if}}
 				 <i class="kidoku"><span>{{>time}}</span></i>
 			</li><!--right_bubble fin-->

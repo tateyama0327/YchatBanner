@@ -19,23 +19,10 @@
             var _talkData = {};
             _talkData.data = [];
             _talkData.data.push({
+                isStamp: options.isStamp,
                 isMytalk: options.isMytalk,
                 contents: options.contents,
-                time: '18:30'
-            });
-            this.$output.append(
-                //テンプレートにデータを渡して、レンダリングする
-                self.$template.render(_talkData)
-            );
-        },
-        postStamp : function(options){
-            var self = this;
-            var _talkData = {};
-            _talkData.data = [];
-            _talkData.data.push({
-                isMytalk: options.isMytalk,
-                isStamp: true,
-                stampName: 'stamp1',
+                stampName: options.stampName,
                 time: '18:30'
             });
             this.$output.append(
@@ -293,16 +280,37 @@
             }else{ //気に食わなかった場合
 
                 this.postTimeFunc(function(){
-                    self.yahooFunc.postStamp({
+                    self.yahooFunc.postMessage({
+                        isMytalk: false,
                         isStamp: true,
-                        stampName: 'stamp1',
+                        stampName: 'stamp2',
                         time: '18:30'
                     });
                 },500,function(){
-
+                    self.commentDontLikeRoop();
                 });
 
             }
+        },
+        commentDontLikeRoop : function(){
+            //気に食わなかった場合のヤフレンジャーのコメント
+            self.yahooFunc.postMessage({
+                isMytalk: false,
+                contents: self.jsonData.chatData.ranger.green.talk[1].talkText
+            });
+        },
+        commentPostFunc : function(optionList,sec,callback){
+            var _cnt = 0;
+            var self = this;
+            (function() {
+
+                if (_cnt < optionList.length) {
+                    setTimeout(arguments.callee, sec);
+                }else{
+                    callback();
+                }
+                _cnt += 1;
+            })();
         }
     };
 
