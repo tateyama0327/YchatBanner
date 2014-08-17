@@ -137,6 +137,9 @@
         init : function(options){
             $.extend(this, options);
             var self = this;
+            //ループ時に使用するカウント
+            this.loopCnt = 0;
+            //jsonデータ読み込み
             this.getJson(function(){
                 //最初のchat呼び出し
                 self.firstChat(self.jsonData);
@@ -165,6 +168,10 @@
             //質問のチョイス
             var self = this;
             var _choiceData = this.jsonData.chatData.questionList[target.getAttribute('data-category')][target.getAttribute('data-num')];
+
+            //後で使うのでオブジェクトルートにキャッシュ
+            this.choiceData = _choiceData;
+
             var _setData = [
             {
                 isMytalk: true,
@@ -227,15 +234,51 @@
                 }
                 ];
                 this.commentPostFunc(_setData,1500,function(){
-                    this.commentDontLikeRoop();
+                    self.commentDontLikeLoop();
                 });
             }
         },
-        commentDontLikeRoop : function(){
-            //気に食わなかった場合のヤフレンジャーのコメント
-            self.yahooFunc.postMessage({
+        commentDontLikeLoop : function(){
+            var self = this;
+            //第二アンサー以降を表示なければ終わりへ。
+            if((this.choiceData.answer.length-1) != this.loopCnt){
+                //ループをカウント
+                this.loopCnt++;
+                var _setData = [
+                {
+                    isMytalk: false,
+                    isStamp: false,
+                    contents: this.choiceData.answer[this.loopCnt]
+                }
+                ];
+                this.commentPostFunc(_setData,1500,function(){
+                    self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
+                });
+            }else{
+                console.warn('終わり！！！！！');
+            }
+        },
+        commentLoopFunc : function(){
+            var self = this;
+            var _setData = [
+            {
                 isMytalk: false,
-                contents: self.jsonData.chatData.ranger.green.talk[1].talkText
+                isStamp: true,
+                stampName: 'stamp2'
+            },
+            {
+                isMytalk: false,
+                isStamp: false,
+                contents: 'まだ。。納得出来ないの(ノд・。) '
+            },
+            {
+                isMytalk: false,
+                isStamp: false,
+                contents: 'この回答ならどうかしら！'
+            }
+            ];
+            this.commentPostFunc(_setData,1500,function(){
+                self.commentDontLikeLoop();
             });
         },
         commentPostFunc : function(optionList,sec,callback){
