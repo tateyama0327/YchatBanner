@@ -287,6 +287,14 @@ a{
 	background-color: #32353a;
 	z-index: 5;
 }
+.fixedBanner{
+	position: fixed;
+	bottom: 0px;
+	width: 320px;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,0)), color-stop(100%,rgba(0,0,0,0.73))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(30,87,153,0) 0%,rgba(0,0,0,0.73) 100%); /* Chrome10+,Safari5.1+ */
+	background: linear-gradient(to bottom,  rgba(30,87,153,0) 0%,rgba(0,0,0,0.73) 100%); /* W3C */
+}
 //css3button
 .css3button_ {
 	display:table;
@@ -391,7 +399,7 @@ a{
 #scrollWrapper {
 	position:relative;
 	z-index:1;
-	width:100% ;
+	width:100%;
 	overflow:hidden;
 }
 .none{
@@ -399,6 +407,9 @@ a{
 }
 .block{
 	display: block;
+}
+.displayWrap{
+	opacity: 0;
 }
 .showAnimation{
 	-webkit-transition: 0.3s;
@@ -421,4 +432,32 @@ a{
 .mt20{
 	margin-top: 20px;
 }
-
+.yahooHomeImg{
+	background-size: 320px;
+}
+.alphaHideAnime{
+	opacity: 0;
+	-webkit-animation: alphaHideAnime 0.5s;
+	animation: alphaHideAnime 0.5s;
+}
+@-webkit-keyframes alphaHideAnime {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+.alphaShowAnime{
+	opacity: 1;
+	-webkit-animation: alphaShowAnime 0.5s;
+	animation: alphaShowAnime 0.5s;
+}
+@-webkit-keyframes alphaShowAnime {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

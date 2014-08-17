@@ -10,6 +10,28 @@
         }
     };
 
+    // イントロ部分
+    yahooChat.introFunc = {
+        init : function(options){
+            $.extend(this, options);
+            this.setEvent();
+        },
+        setEvent : function(){
+            var self = this;
+            this.$fixedBanner.on('click',function(){
+                self.$yahooHome.addClass('alphaHideAnime');
+                self.$yahooHome.on('webkitAnimationEnd',function(){
+                    self.$yahooHome.remove();
+                    self.$displayWrap.addClass('alphaShowAnime');
+                        //チャット制御系(コントローラー)
+                        yahooChat.controlFunc.init({
+                            yahooFunc : yahooChat.yahooPostFunc,
+                            answerBtnFunc : yahooChat.answerBtnFunc
+                        });
+                });
+            });
+        },
+    };
 
     // yahoo側の投稿制御
     yahooChat.yahooPostFunc = {
@@ -33,7 +55,9 @@
                 isMytalk: options.isMytalk,
                 contents: options.contents,
                 stampName: options.stampName,
-                time: hour + ':' + min
+                time: hour + ':' + min,
+                rangerName: options.rangerName,
+                rangerColor: options.rangerColor
             });
             this.$output.append(
                 //テンプレートにデータを渡して、レンダリングする
@@ -65,7 +89,9 @@
                 _renderData.data.push({
                     isMytalk: false,
                     isStamp: true,
-                    title: data[i]
+                    title: data[i],
+                    rangerName: 'レッド',
+                    rangerColor: 'red'
                 });
                 this.$output.html(
                     //テンプレートにデータを渡して、レンダリングする
@@ -85,7 +111,9 @@
                     isMytalk: false,
                     isStamp: true,
                     title: data[i],
-                    isLike: i
+                    isLike: i,
+                    rangerName: 'レッド',
+                    rangerColor: 'red'
                 });
                 this.$output.html(
                     //テンプレートにデータを渡して、レンダリングする
@@ -157,7 +185,6 @@
         },
         hideFixedFeild : function(){
             // アンサーボタンステージの表示関数
-            console.warn('aaaa');
             this.$fixedFeildEl.css('bottom','-200px');
         },
         scrollPageFunc : function(){
@@ -193,6 +220,8 @@
             var _setData = [
             {
                 isMytalk: false,
+                rangerName: 'レッド',
+                rangerColor: 'red',
                 contents: data.chatData.ranger.red.talk[0].talkText
             }
             ];
@@ -207,8 +236,6 @@
             var self = this;
             var _choiceData = this.jsonData.chatData.questionList[target.parentNode.getAttribute('data-category')][target.parentNode.getAttribute('data-num')];
 
-
-            console.warn(_choiceData);
             //後で使うのでオブジェクトルートにキャッシュ
             this.choiceData = _choiceData;
 
@@ -219,11 +246,15 @@
             },
             {
                 isMytalk: false,
-                contents: self.jsonData.chatData.ranger.pink.talk[0].talkText
+                contents: self.jsonData.chatData.ranger.pink.talk[0].talkText,
+                rangerName: 'ピンク',
+                rangerColor: 'pink'
             },
             {
                 isMytalk: false,
-                contents: _choiceData.answer[0]
+                contents: _choiceData.answer[0],
+                rangerName: 'ピンク',
+                rangerColor: 'pink'
             }
             ];
             this.commentPostFunc(_setData,1500,function(){
@@ -240,7 +271,9 @@
             },
             {
                 isMytalk: false,
-                contents: self.jsonData.chatData.ranger.red.talk[1].talkText
+                contents: self.jsonData.chatData.ranger.red.talk[1].talkText,
+                rangerName: 'レッド',
+                rangerColor: 'red'
             }
             ];
             this.commentPostFunc(_setData,1500,function(){
@@ -256,31 +289,7 @@
                 console.log('気に入った！');
 
             }else{ //気に食わなかった場合
-                var _setData = [
-                {
-                    isMytalk: true,
-                    isStamp: false,
-                    contents: '気に食わない'
-                },
-                {
-                    isMytalk: false,
-                    isStamp: true,
-                    stampName: 'stamp2'
-                },
-                {
-                    isMytalk: false,
-                    isStamp: false,
-                    contents: 'そんな！ひどい。。'
-                },
-                {
-                    isMytalk: false,
-                    isStamp: false,
-                    contents: 'この回答ならどうかしら！'
-                }
-                ];
-                this.commentPostFunc(_setData,1500,function(){
-                    self.commentDontLikeLoop();
-                });
+                self.commentDontLikeLoop();
             }
         },
         commentDontLikeLoop : function(){
@@ -291,9 +300,37 @@
                 this.loopCnt++;
                 var _setData = [
                 {
+                    isMytalk: true,
+                    isStamp: false,
+                    contents: '気に食わない'
+                },
+                {
+                    isMytalk: false,
+                    isStamp: true,
+                    stampName: 'stamp2',
+                    rangerName: 'ピンク',
+                    rangerColor: 'pink'
+                },
+                {
                     isMytalk: false,
                     isStamp: false,
-                    contents: this.choiceData.answer[this.loopCnt]
+                    contents: 'そんな！ひどい。。',
+                    rangerName: 'ピンク',
+                    rangerColor: 'pink'
+                },
+                {
+                    isMytalk: false,
+                    isStamp: false,
+                    contents: 'この回答ならどうかしら！',
+                    rangerName: 'ピンク',
+                    rangerColor: 'pink'
+                },
+                {
+                    isMytalk: false,
+                    isStamp: false,
+                    contents: this.choiceData.answer[this.loopCnt],
+                    rangerName: 'ピンク',
+                    rangerColor: 'pink'
                 }
                 ];
                 this.commentPostFunc(_setData,1500,function(){
@@ -309,17 +346,23 @@
             {
                 isMytalk: false,
                 isStamp: true,
-                stampName: 'stamp2'
+                stampName: 'stamp2',
+                rangerName: 'ピンク',
+                rangerColor: 'pink'
             },
             {
                 isMytalk: false,
                 isStamp: false,
-                contents: 'まだ。。納得出来ないの(ノд・。) '
+                contents: 'まだ。。納得出来ないの(ノд・。) ',
+                rangerName: 'ピンク',
+                rangerColor: 'pink'
             },
             {
                 isMytalk: false,
                 isStamp: false,
-                contents: 'この回答ならどうかしら！'
+                contents: 'この回答ならどうかしら！',
+                rangerName: 'ピンク',
+                rangerColor: 'pink'
             }
             ];
             this.commentPostFunc(_setData,1500,function(){
@@ -335,7 +378,9 @@
                     isMytalk: optionList[_cnt].isMytalk,
                     isStamp: optionList[_cnt].isStamp,
                     stampName: optionList[_cnt].stampName,
-                    contents: optionList[_cnt].contents
+                    contents: optionList[_cnt].contents,
+                    rangerName: optionList[_cnt].rangerName,
+                    rangerColor: optionList[_cnt].rangerColor
                 });
                 _cnt += 1;
                 if (_cnt < optionList.length) {
@@ -370,10 +415,11 @@
             $template : $('#tmpl_answerBtn')
         });
 
-        //チャット制御系(コントローラー)
-        yahooChat.controlFunc.init({
-            yahooFunc : yahooChat.yahooPostFunc,
-            answerBtnFunc : yahooChat.answerBtnFunc
+        // チャットイントロ部分
+        yahooChat.introFunc.init({
+            $displayWrap : $('.displayWrap'),
+            $yahooHome : $('.yahooHome'),
+            $fixedBanner : $('.fixedBanner')
         });
 
     });
