@@ -4,10 +4,11 @@
     // 画面の調整
     yahooChat.displayFunc = {
         init : function(options){
-            $.extend(this, options);
-            this.$contentEl.css( "height" , ($(window).height()-113) );
+            // $.extend(this, options);
+            // this.$contentEl.css( "height" , ($(window).height()-113) );
         }
     };
+
 
     // yahoo側の投稿制御
     yahooChat.yahooPostFunc = {
@@ -32,75 +33,8 @@
         }
     };
 
-    // ユーザーの投稿制御
-    yahooChat.postFunc = {
-        init : function(options){
-            $.extend(this, options);
-            this.setEvent();
-        },
-        setEvent : function(){
-            var self = this;
-            this.$btnEl.on('click',function(){
-                //コメントを投稿
-                self.postMessage();
-            });
-        },
-        getEntryText : function(){
-            //入力値を取得
-            var _postComment = this.$textAreaEl.find('textarea').val();
-            return _postComment;
-        },
-        postMessage : function(){
-            var self = this;
-            var _postComment = this.getEntryText();
-            var _talkData = {};
-            _talkData.data = [];
-            _talkData.data.push({
-                isMytalk: true,
-                contents: _postComment,
-                time: '18:30'
-            });
-            this.$output.append(
-                //テンプレートにデータを渡して、レンダリングする
-                self.$template.render(_talkData)
-            );
-        }
-    };
-    // スタンプ投稿制御
-    yahooChat.stampFunc = {
-        init : function(options){
-            $.extend(this, options);
-            this.setEvent();
-        },
-        setEvent : function(){
-            var self = this;
-            this.$btnEl.on('click',function(){
-                self.showFeild();
-            });
-            this.$stampFeildEl.find('.stamp').on('click',function(){
-                self.postStamp();
-            });
-        },
-        showFeild : function(){
-            this.$stampFeildEl.toggleClass('none');
-        },
-        postStamp : function(){
-            var self = this;
-            var _talkData = {};
-            _talkData.data = [];
-            _talkData.data.push({
-                isMytalk: false,
-                isStamp: true,
-                contents: 'aaaaa',
-                time: '18:30'
-            });
-            this.$output.append(
-                //テンプレートにデータを渡して、レンダリングする
-                self.$template.render(_talkData)
-            );
-        }
-    };
-    // 
+
+    // ユーザーアンサーボタン制御
     yahooChat.answerBtnFunc = {
         init : function(options){
             $.extend(this, options);
@@ -197,6 +131,7 @@
         }
     };
 
+
     // yahoo側自動chat制御系
     yahooChat.controlFunc = {
         init : function(options){
@@ -227,6 +162,7 @@
             });
         },
         answerBtnClickFunc : function(target){
+            //質問のチョイス
             var self = this;
             var _choiceData = this.jsonData.chatData.questionList[target.getAttribute('data-category')][target.getAttribute('data-num')];
             var _setData = [
@@ -248,6 +184,7 @@
             });
         },
         comment1BtnClickFunc : function(target){
+            //最初のユーザーとの掛け合い
             var self = this;
             var _setData = [
             {
@@ -264,6 +201,7 @@
             });
         },
         comment2BtnClickFunc : function(target){
+            //最後のユーザーとの掛け合い
             var self = this;
             var _choiceData = target.getAttribute('data-isLike');
             if(_choiceData === '0'){ //気に入った場合
@@ -281,6 +219,11 @@
                     isMytalk: false,
                     isStamp: false,
                     contents: 'そんな！ひどい。。'
+                },
+                {
+                    isMytalk: false,
+                    isStamp: false,
+                    contents: 'この回答ならどうかしら！'
                 }
                 ];
                 this.commentPostFunc(_setData,1500,function(){
@@ -304,8 +247,7 @@
                     isMytalk: optionList[_cnt].isMytalk,
                     isStamp: optionList[_cnt].isStamp,
                     stampName: optionList[_cnt].stampName,
-                    contents: optionList[_cnt].contents,
-                    time: '18:30'
+                    contents: optionList[_cnt].contents
                 });
                 _cnt += 1;
                 if (_cnt < optionList.length) {
@@ -345,36 +287,7 @@
             answerBtnFunc : yahooChat.answerBtnFunc
         });
 
-        // yahooChat.postFunc.init({
-        //     $btnEl : $('#postBtn'),
-        //     $output : $('#bubbleLists'),
-        //     $textAreaEl : $('#textFeild'),
-        //     $template : $('#talkDataTmpl')
-        // });
-        // yahooChat.stampFunc.init({
-        //     $btnEl : $('#plusBtn'),
-        //     $stampFeildEl : $('#stampFeild'),
-        //     $output : $('#bubbleLists'),
-        //     $template : $('#talkDataTmpl')
-        // });
-
     });
 
-    // jsRenderテスト
-    // $(function(){
-
-    //     var talkData = {
-    //         data:[
-    //             {isMytalk: false, contents: '何か悩みでもある？', time: '18:30'},
-    //             {isMytalk: true, contents: 'あかん', time: '18:30'},
-    //             {isMytalk: true, contents: 'あかん', time: '18:30'}
-    //         ]
-    //     };
-    //     $('#bubbleLists').html(
-    //         //テンプレートにデータを渡して、レンダリングする
-    //         $('#talkDataTemplate').render(talkData)
-    //     );
-
-    // });
 
 })(window);
