@@ -42,14 +42,15 @@
         postMessage : function(options){
             var self = this;
             var _talkData = {};
+            _talkData.data = [];
 
+            //時間表示用
             var now = new Date();
             var hour = now.getHours(); // 時
             var min = now.getMinutes(); // 分
             if(hour < 10) { hour = "0" + hour; }
             if(min < 10) { min = "0" + min; }
-
-            _talkData.data = [];
+            
             _talkData.data.push({
                 isStamp: options.isStamp,
                 isMytalk: options.isMytalk,
@@ -181,7 +182,11 @@
         },
         showFixedFeild : function(){
             // アンサーボタンステージの表示関数
+            var _feildHeight = this.$fixedFeildEl.height();
+            var _originHeight = this.$bubbleListsEl.height();
+            console.warn(_feildHeight,_originHeight);
             this.$fixedFeildEl.css('bottom','0px');
+            this.$bubbleListsEl.css('height',_feildHeight+_originHeight+'px');
         },
         hideFixedFeild : function(){
             // アンサーボタンステージの表示関数
@@ -283,10 +288,20 @@
         comment2BtnClickFunc : function(target){
             //最後のユーザーとの掛け合い
             var self = this;
-            var _choiceData = target.getAttribute('data-isLike');
+            var _choiceData = target.parentNode.getAttribute('data-isLike');
             if(_choiceData === '0'){ //気に入った場合
 
-                this.LoopEndFunc();
+                var _setData = [
+                {
+                    isMytalk: true,
+                    isStamp: false,
+                    contents: '気にいった'
+                }
+                ];
+                this.commentPostFunc(_setData,1500,function(){
+                    self.LoopEndFunc('like');
+                });
+
 
             }else{ //気に食わなかった場合
 
@@ -343,7 +358,7 @@
                     self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
                 });
             }else{
-                this.LoopEndFunc();
+                this.LoopEndFunc('dontLike');
             }
         },
         commentLoopFunc : function(){
@@ -396,11 +411,32 @@
                 }
             })();
         },
-        LoopEndFunc : function(){
-            yahooChat.endingFunc.init({
-            $displayWrap : $('.displayWrap'),
-            $lastCut : $('.lastCut'),
-        });
+        LoopEndFunc : function(type){
+            var self = this;
+            var _isLike;
+            if(type === 'like'){
+                _isLike = true;
+            }else{
+                _isLike = false;
+            }
+            console.warn(self.jsonData);
+            var _setData = [
+            {
+                isMytalk: false,
+                rangerName: 'レッド',
+                rangerColor: 'red',
+                contents: self.jsonData.chatData.ranger.red.talk[2].talkText
+            }
+            ];
+            this.commentPostFunc(_setData,1500,function(){
+                setTimeout(function(){
+                    yahooChat.endingFunc.init({
+                        $displayWrap : $('.displayWrap'),
+                        $lastCut : $('#lastCut'),
+                        isLike : _isLike
+                    });
+                },3000);
+            });
         }
     };
 
@@ -408,15 +444,20 @@
     yahooChat.endingFunc = {
         init : function(options){
             $.extend(this, options);
+            var likeType = this.isLike?1:0;
+            this.$lastCut.find('img').eq(likeType).addClass('none');
             this.displayChange();
         },
         displayChange : function(){
             var self = this;
-            this.$lastCut.css('display','block');
+            this.$lastCut.removeClass('none');
+            this.$displayWrap.removeClass('alphaShowAnime');
             this.$displayWrap.addClass('alphaHideAnime');
             this.$displayWrap.on('webkitAnimationEnd',function(){
+                $('html,body').animate({ scrollTop: 0 }, 'fast');
+                self.$displayWrap.remove();
                 self.$lastCut.addClass('alphaShowAnime');
-                //self.setLocationEvent();
+                self.setLocationEvent();
             });
         },
         setLocationEvent : function(){
@@ -443,6 +484,7 @@
         //アンサーボタン制御
         yahooChat.answerBtnFunc.init({
             $fixedFeildEl : $('.fixedFeild'),
+            $bubbleListsEl : $('#bubbleLists'),
             $btnFeildEl : $('.js_answerBtn'),
             $output : $('#out_textFeild'),
             $template : $('#tmpl_answerBtn')
@@ -456,6 +498,5 @@
         });
 
     });
-
 
 })(window);

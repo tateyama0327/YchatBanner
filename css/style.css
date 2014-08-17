@@ -903,9 +903,6 @@ a {
 .yahooHomeImg {
   background-size: 320px;
 }
-.lastCut {
-  display: none;
-}
 .alphaHideAnime {
   opacity: 0;
   -webkit-animation: alphaHideAnime 0.5s;

@@ -4,60 +4,53 @@
             "red": {
                 "talk": [
                     {
-                        "talkText": "オッス！オラ！Yahoo! レッド！",
-                        "changeUserFlg": true
+                        "talkText": "オッス！オラ！Yahoo! レッド！"
                     },
                     {
-                        "talkText": "オラを呼んだってことは、なんか悩みあるんじゃねーのか？どんな悩みでも、俺たちヤフレンジャーが答えを導くぜっ！",
-                        "changeUserFlg": true
+                        "talkText": "オラを呼んだってことは、なんか悩みあるんじゃねーのか？どんな悩みでも、俺たちヤフレンジャーが答えを導くぜっ！"
+                    },
+                    {
+                        "talkText": "君の悩みに、我々の知恵が貸せてよかった！"
                     }
                 ]
             },
             "pink": {
                 "talk": [
                     {
-                        "talkText": "ピンクがんばる！♥︎",
-                        "changeUserFlg": true
+                        "talkText": "ピンクがんばる！♥︎"
                     },
                     {
-                        "talkText": "オラを呼んだってことは、なんか悩みあるんじゃねーのか？どんな悩みでも、俺たちヤフレンジャーが答えを導くぜっ！",
-                        "changeUserFlg": true
+                        "talkText": "オラを呼んだってことは、なんか悩みあるんじゃねーのか？どんな悩みでも、俺たちヤフレンジャーが答えを導くぜっ！"
                     }
                 ]
             },
             "white": {
                 "talk": [
                     {
-                        "talkText": "わんわん！！",
-                        "changeUserFlg": true
+                        "talkText": "わんわん！！"
                     },
                     {
-                        "talkText": "オラを呼んだってことは、なんか悩みあるんじゃねーのか？どんな悩みでも、俺たちヤフレンジャーが答えを導くぜっ！",
-                        "changeUserFlg": true
+                        "talkText": "オラを呼んだってことは、なんか悩みあるんじゃねーのか？どんな悩みでも、俺たちヤフレンジャーが答えを導くぜっ！"
                     }
                 ]
             },
             "green": {
                 "talk": [
                     {
-                        "talkText": "いくわよ♂",
-                        "changeUserFlg": true
+                        "talkText": "いくわよ♂"
                     },
                     {
-                        "talkText": "オラを呼んだってことは、なんか悩みあるんじゃねーのか？どんな悩みでも、俺たちヤフレンジャーが答えを導くぜっ！",
-                        "changeUserFlg": true
+                        "talkText": "オラを呼んだってことは、なんか悩みあるんじゃねーのか？どんな悩みでも、俺たちヤフレンジャーが答えを導くぜっ！"
                     }
                 ]
             },
             "blue": {
                 "talk": [
                     {
-                        "talkText": "オッス！オラ！Yahoo! レッド！",
-                        "changeUserFlg": true
+                        "talkText": "オッス！オラ！Yahoo! レッド！"
                     },
                     {
-                        "talkText": "オラを呼んだってことは、なんか悩みあるんじゃねーのか？どんな悩みでも、俺たちヤフレンジャーが答えを導くぜっ！",
-                        "changeUserFlg": true
+                        "talkText": "オラを呼んだってことは、なんか悩みあるんじゃねーのか？どんな悩みでも、俺たちヤフレンジャーが答えを導くぜっ！"
                     }
                 ]
             }
