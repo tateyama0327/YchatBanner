@@ -62,6 +62,10 @@
                 ]
             }
         },
+        "commentList": {
+            "comment1": ["こんにちは","ハロー","あほー"],
+            "comment2": ["気に入った","気に食わない"]
+        },
         "questionList": {
             "rareQuestion": [
                 {

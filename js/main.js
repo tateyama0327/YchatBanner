@@ -103,45 +103,68 @@
         init : function(options){
             $.extend(this, options);
         },
-        postAnswer : function(data){
-            var _rareQuestion = data.chatData.questionList.rareQuestion;
-            var _triviaQuestion = data.chatData.questionList.triviaQuestion;
-            var _seriousQuestion = data.chatData.questionList.seriousQuestion;
-
+        choiceComment : function(data){
             var self = this;
-            var _titleText = '';
-            var _categoryText = '';
             var _renderData = {};
             _renderData.data = [];
-            for(var i = 0, len = 3; i < 3; i++){
-                var _randomNum = this.randomNum(3,0);
-                if(i === 0){
-                    _titleText = _rareQuestion[_randomNum].title;
-                    _categoryText = 'rareQuestion';
-                }else if(i === 1){
-                    _titleText = _triviaQuestion[_randomNum].title;
-                    _categoryText = 'triviaQuestion';
-                }else{
-                    _titleText = _seriousQuestion[_randomNum].title;
-                    _categoryText = 'seriousQuestion';
-                }
+            for(var i = 0, len = data.length; i < len; i++){
+
                 _renderData.data.push({
                     isMytalk: false,
                     isStamp: true,
-                    title: _titleText,
-                    category: _categoryText,
-                    dataNum: _randomNum
+                    title: data[i]
                 });
+                this.$output.html(
+                    //テンプレートにデータを渡して、レンダリングする
+                    self.$template.render(_renderData)
+                );
             }
+            this.setEvent('choiceComment');
+        },
+        choiceQuestion : function(data){
+                var _rareQuestion = data.chatData.questionList.rareQuestion;
+                var _triviaQuestion = data.chatData.questionList.triviaQuestion;
+                var _seriousQuestion = data.chatData.questionList.seriousQuestion;
+
+                var self = this;
+                var _titleText = '';
+                var _categoryText = '';
+                var _renderData = {};
+                _renderData.data = [];
+                for(var i = 0, len = 3; i < len; i++){
+                    var _randomNum = this.randomNum(3,0);
+                    if(i === 0){
+                        _titleText = _rareQuestion[_randomNum].title;
+                        _categoryText = 'rareQuestion';
+                    }else if(i === 1){
+                        _titleText = _triviaQuestion[_randomNum].title;
+                        _categoryText = 'triviaQuestion';
+                    }else{
+                        _titleText = _seriousQuestion[_randomNum].title;
+                        _categoryText = 'seriousQuestion';
+                    }
+                    _renderData.data.push({
+                        isMytalk: false,
+                        isStamp: true,
+                        title: _titleText,
+                        category: _categoryText,
+                        dataNum: _randomNum
+                    });
+                }
+
             this.$output.html(
                 //テンプレートにデータを渡して、レンダリングする
                 self.$template.render(_renderData)
             );
-            this.setEvent();
+            this.setEvent('choiceQuestion');
         },
-        setEvent : function(){
+        setEvent : function(choiceMode){
             this.$btnFeildEl.on('click',function(e){
-               yahooChat.controlFunc.answerBtnClickFunc(e.target);
+                if(choiceMode === 'choiceQuestion'){
+                    yahooChat.controlFunc.answerBtnClickFunc(e.target);
+                }else{
+                    yahooChat.controlFunc.commentBtnClickFunc(e.target);
+                }
             });
         },
         randomNum : function(max,min){
@@ -175,7 +198,7 @@
                     contents: data.chatData.ranger.red.talk[0].talkText
                 });
             },500,function(){
-                self.answerBtnFunc.postAnswer(data);
+                self.answerBtnFunc.choiceComment(data.chatData.commentList.comment1);
             });
         },
         postTimeFunc : function(func,sec,callback){
@@ -198,8 +221,23 @@
             },500,function(){
                 self.yahooFunc.postMessage({
                     isMytalk: false,
-                    contents: _choiceData.answer
+                    contents: _choiceData.answer[0]
                 });
+            });
+        },
+        commentBtnClickFunc : function(target){
+            var self = this;
+            this.postTimeFunc(function(){
+                self.yahooFunc.postMessage({
+                    isMytalk: true,
+                    contents: target.innerHTML
+                });
+                self.yahooFunc.postMessage({
+                    isMytalk: false,
+                    contents: self.jsonData.chatData.ranger.red.talk[1].talkText
+                });
+            },500,function(){
+                self.answerBtnFunc.choiceQuestion(self.jsonData);
             });
         }
     };
