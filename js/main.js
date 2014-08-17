@@ -34,7 +34,8 @@
                 contents: options.contents,
                 stampName: options.stampName,
                 time: hour + ':' + min,
-                rangerName: options.rangerName
+                rangerName: options.rangerName,
+                rangerColor: options.rangerColor
             });
             this.$output.append(
                 //テンプレートにデータを渡して、レンダリングする
@@ -67,7 +68,8 @@
                     isMytalk: false,
                     isStamp: true,
                     title: data[i],
-                    rangerName: 'レッド'
+                    rangerName: 'レッド',
+                    rangerColor: 'red'
                 });
                 this.$output.html(
                     //テンプレートにデータを渡して、レンダリングする
@@ -88,7 +90,8 @@
                     isStamp: true,
                     title: data[i],
                     isLike: i,
-                    rangerName: 'レッド'
+                    rangerName: 'レッド',
+                    rangerColor: 'red'
                 });
                 this.$output.html(
                     //テンプレートにデータを渡して、レンダリングする
@@ -196,6 +199,7 @@
             {
                 isMytalk: false,
                 rangerName: 'レッド',
+                rangerColor: 'red',
                 contents: data.chatData.ranger.red.talk[0].talkText
             }
             ];
@@ -221,12 +225,14 @@
             {
                 isMytalk: false,
                 contents: self.jsonData.chatData.ranger.pink.talk[0].talkText,
-                rangerName: 'ピンク'
+                rangerName: 'ピンク',
+                rangerColor: 'pink'
             },
             {
                 isMytalk: false,
                 contents: _choiceData.answer[0],
-                rangerName: 'ピンク'
+                rangerName: 'ピンク',
+                rangerColor: 'pink'
             }
             ];
             this.commentPostFunc(_setData,1500,function(){
@@ -244,7 +250,8 @@
             {
                 isMytalk: false,
                 contents: self.jsonData.chatData.ranger.red.talk[1].talkText,
-                rangerName: 'レッド'
+                rangerName: 'レッド',
+                rangerColor: 'red'
             }
             ];
             this.commentPostFunc(_setData,1500,function(){
@@ -260,34 +267,7 @@
                 console.log('気に入った！');
 
             }else{ //気に食わなかった場合
-                var _setData = [
-                {
-                    isMytalk: true,
-                    isStamp: false,
-                    contents: '気に食わない'
-                },
-                {
-                    isMytalk: false,
-                    isStamp: true,
-                    stampName: 'stamp2',
-                    rangerName: 'ピンク'
-                },
-                {
-                    isMytalk: false,
-                    isStamp: false,
-                    contents: 'そんな！ひどい。。',
-                    rangerName: 'ピンク'
-                },
-                {
-                    isMytalk: false,
-                    isStamp: false,
-                    contents: 'この回答ならどうかしら！',
-                    rangerName: 'ピンク'
-                }
-                ];
-                this.commentPostFunc(_setData,1500,function(){
-                    self.commentDontLikeLoop();
-                });
+                self.commentDontLikeLoop();
             }
         },
         commentDontLikeLoop : function(){
@@ -298,9 +278,37 @@
                 this.loopCnt++;
                 var _setData = [
                 {
+                    isMytalk: true,
+                    isStamp: false,
+                    contents: '気に食わない'
+                },
+                {
+                    isMytalk: false,
+                    isStamp: true,
+                    stampName: 'stamp2',
+                    rangerName: 'ピンク',
+                    rangerColor: 'pink'
+                },
+                {
                     isMytalk: false,
                     isStamp: false,
-                    contents: this.choiceData.answer[this.loopCnt]
+                    contents: 'そんな！ひどい。。',
+                    rangerName: 'ピンク',
+                    rangerColor: 'pink'
+                },
+                {
+                    isMytalk: false,
+                    isStamp: false,
+                    contents: 'この回答ならどうかしら！',
+                    rangerName: 'ピンク',
+                    rangerColor: 'pink'
+                },
+                {
+                    isMytalk: false,
+                    isStamp: false,
+                    contents: this.choiceData.answer[this.loopCnt],
+                    rangerName: 'ピンク',
+                    rangerColor: 'pink'
                 }
                 ];
                 this.commentPostFunc(_setData,1500,function(){
@@ -317,19 +325,22 @@
                 isMytalk: false,
                 isStamp: true,
                 stampName: 'stamp2',
-                rangerName: 'ピンク'
+                rangerName: 'ピンク',
+                rangerColor: 'pink'
             },
             {
                 isMytalk: false,
                 isStamp: false,
                 contents: 'まだ。。納得出来ないの(ノд・。) ',
-                rangerName: 'ピンク'
+                rangerName: 'ピンク',
+                rangerColor: 'pink'
             },
             {
                 isMytalk: false,
                 isStamp: false,
                 contents: 'この回答ならどうかしら！',
-                rangerName: 'ピンク'
+                rangerName: 'ピンク',
+                rangerColor: 'pink'
             }
             ];
             this.commentPostFunc(_setData,1500,function(){
@@ -346,7 +357,8 @@
                     isStamp: optionList[_cnt].isStamp,
                     stampName: optionList[_cnt].stampName,
                     contents: optionList[_cnt].contents,
-                    rangerName: optionList[_cnt].rangerName
+                    rangerName: optionList[_cnt].rangerName,
+                    rangerColor: optionList[_cnt].rangerColor
                 });
                 _cnt += 1;
                 if (_cnt < optionList.length) {
