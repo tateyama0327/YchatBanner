@@ -39,7 +39,7 @@
 		 </div>
 	</div><!--content fin-->
 
-	<div class="fixedFeild">
+	<div class="fixedFeild showAnimation">
 		<div class="textFeild clearfix">
 			<div id="out_textFeild" class="js_answerBtn answerBtn">
 			</div>
@@ -53,20 +53,20 @@
 	{{for data}}
 		{{if isMytalk}}
 			{{if isStamp}}
-				<li class="right_bubble">
+				<li class="balloonShowAnime right_bubble">
 					<p><img src="img/stamp/{{>stampName}}.png" width="100"></p>
 			{{else}}
-				<li class="right_bubble">
+				<li class="balloonShowAnime right_bubble">
 						<div class="bubble_bg">
 						<p>{{:contents}}</p>
 					 </div>
 			{{/if}}
 		{{else}}
 			{{if isStamp}}
-				<li class="left_bubble">
+				<li class="balloonShowAnime left_bubble">
 					<p><img src="img/stamp/{{>stampName}}.png" width="100"></p>
 			{{else}}
-				<li class="left_bubble">
+				<li class="balloonShowAnime left_bubble">
 					<img class="icon" src="img/yahooIcon_red.png"/>
 					<p class="username">Yahoo!レッド</p>
 					<div class="bubble_bg">

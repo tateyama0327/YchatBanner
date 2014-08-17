@@ -60,7 +60,7 @@ a{
 	width:320px;
 	margin:0;
 	padding:0;
-	min-height:200px;
+	min-height:3000px;
 	overflow-x:hidden;
 	overflow-y:scroll;
 		/*scrollbar*/
@@ -218,7 +218,7 @@ a{
 					.boxShadow(0,1px,0,1px,@black,.05);
 					/*検討*/
 					p{
-						.fontNormal(28px);
+						.fontNormal(14px);
 						line-height:32px;
 						margin:0;
 						padding:4px;
@@ -275,7 +275,7 @@ a{
 /* 峯岸追記箇所 */
 .fixedFeild{
 	position: fixed;
-	bottom: 0px;
+	bottom: -100px;
 	height: auto;
 	width: 320px;
 	background-color: #f00;
@@ -330,3 +330,25 @@ a{
 .block{
 	display: block;
 }
+.showAnimation{
+	-webkit-transition: 0.3s;
+	transition: 0.3s;
+}
+.balloonShowAnime{
+	-webkit-animation: balloonShowAnime 0.5s;
+	animation: balloonShowAnime 0.5s;
+}
+@-webkit-keyframes balloonShowAnime {
+	0% {
+		-webkit-transform: translate(0px,30px);
+		opacity: 0;
+	}
+	100% {
+		-webkit-transform: translate(0px,0px);  
+		opacity: 1;
+	}
+}
+.mt20{
+	margin-top: 20px;
+}
+

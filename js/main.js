@@ -4,6 +4,7 @@
     // 画面の調整
     yahooChat.displayFunc = {
         init : function(options){
+            $('html,body').animate({ scrollTop: 0 }, 'fast');
             // $.extend(this, options);
             // this.$contentEl.css( "height" , ($(window).height()-113) );
         }
@@ -13,6 +14,7 @@
     // yahoo側の投稿制御
     yahooChat.yahooPostFunc = {
         init : function(options){
+            this.appendCnt = 0;
             $.extend(this, options);
         },
         postMessage : function(options){
@@ -30,9 +32,17 @@
                 //テンプレートにデータを渡して、レンダリングする
                 self.$template.render(_talkData)
             );
+            this.showAnime();
+            this.appendCnt++;
+        },
+        showAnime : function(){
+            if(this.appendCnt != 0){
+                var _scrollEl = this.$output.find('.balloonShowAnime').eq(this.appendCnt).offset().top+100;
+                $('html,body').animate({ scrollTop: _scrollEl }, 'fast');
+                return false;
+            }
         }
     };
-
 
     // ユーザーアンサーボタン制御
     yahooChat.answerBtnFunc = {
@@ -56,6 +66,7 @@
                 );
             }
             this.setEvent('choiceFirstComment');
+            this.showFixedFeild();
         },
         choiceSecondComment : function(data){
             var self = this;
@@ -75,6 +86,7 @@
                 );
             }
             this.setEvent('choiceSecondComment');
+            this.showFixedFeild();
         },
         choiceQuestion : function(data){
                 var _rareQuestion = data.chatData.questionList.rareQuestion;
@@ -112,8 +124,10 @@
                 self.$template.render(_renderData)
             );
             this.setEvent('choiceQuestion');
+            this.showFixedFeild();
         },
         setEvent : function(choiceMode){
+            var self = this;
             this.$btnFeildEl.off();
             this.$btnFeildEl.on('click',function(e){
                 if(choiceMode === 'choiceQuestion'){
@@ -123,11 +137,26 @@
                 }else{
                     yahooChat.controlFunc.comment2BtnClickFunc(e.target);
                 }
+                self.hideFixedFeild();
             });
         },
         randomNum : function(max,min){
             //乱数生成(小数点あり)
             return Math.floor(Math.random()*(max-min)+min);
+        },
+        showFixedFeild : function(){
+            // アンサーボタンステージの表示関数
+            this.$fixedFeildEl.css('bottom','0px');
+        },
+        hideFixedFeild : function(){
+            // アンサーボタンステージの表示関数
+            console.warn('aaaa');
+            this.$fixedFeildEl.css('bottom','-200px');
+        },
+        scrollPageFunc : function(){
+        //ページ内スクロール
+            var p = $(".content").eq(i).offset().top;
+            $('html,body').animate({ scrollTop: p }, 'fast');
         }
     };
 
@@ -161,7 +190,9 @@
             }
             ];
             this.commentPostFunc(_setData,1500,function(){
-                self.answerBtnFunc.choiceFirstComment(data.chatData.commentList.comment1);
+                setTimeout(function(){
+                    self.answerBtnFunc.choiceFirstComment(data.chatData.commentList.comment1);
+                },1500);
             });
         },
         answerBtnClickFunc : function(target){
@@ -175,7 +206,7 @@
             var _setData = [
             {
                 isMytalk: true,
-                contents: _choiceData.title
+                contents: _choiceData.content
             },
             {
                 isMytalk: false,
@@ -217,6 +248,11 @@
 
             }else{ //気に食わなかった場合
                 var _setData = [
+                {
+                    isMytalk: true,
+                    isStamp: false,
+                    contents: '気に食わない'
+                },
                 {
                     isMytalk: false,
                     isStamp: true,
@@ -319,6 +355,7 @@
 
         //アンサーボタン制御
         yahooChat.answerBtnFunc.init({
+            $fixedFeildEl : $('.fixedFeild'),
             $btnFeildEl : $('.js_answerBtn'),
             $output : $('#out_textFeild'),
             $template : $('#tmpl_answerBtn')
