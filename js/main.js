@@ -286,10 +286,21 @@
             var _choiceData = target.getAttribute('data-isLike');
             if(_choiceData === '0'){ //気に入った場合
 
-                console.log('気に入った！');
+                this.LoopEndFunc();
 
             }else{ //気に食わなかった場合
-                self.commentDontLikeLoop();
+
+                var _setData = [
+                {
+                    isMytalk: true,
+                    isStamp: false,
+                    contents: '気に食わない'
+                }
+                ];
+                this.commentPostFunc(_setData,1500,function(){
+                    self.commentDontLikeLoop();
+                });
+
             }
         },
         commentDontLikeLoop : function(){
@@ -299,11 +310,6 @@
                 //ループをカウント
                 this.loopCnt++;
                 var _setData = [
-                {
-                    isMytalk: true,
-                    isStamp: false,
-                    contents: '気に食わない'
-                },
                 {
                     isMytalk: false,
                     isStamp: true,
@@ -337,7 +343,7 @@
                     self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
                 });
             }else{
-                console.warn('終わり！！！！！');
+                this.LoopEndFunc();
             }
         },
         commentLoopFunc : function(){
@@ -389,9 +395,36 @@
                     callback();
                 }
             })();
+        },
+        LoopEndFunc : function(){
+            yahooChat.endingFunc.init({
+            $displayWrap : $('.displayWrap'),
+            $lastCut : $('.lastCut'),
+        });
         }
     };
 
+    // エンディング画面
+    yahooChat.endingFunc = {
+        init : function(options){
+            $.extend(this, options);
+            this.displayChange();
+        },
+        displayChange : function(){
+            var self = this;
+            this.$lastCut.css('display','block');
+            this.$displayWrap.addClass('alphaHideAnime');
+            this.$displayWrap.on('webkitAnimationEnd',function(){
+                self.$lastCut.addClass('alphaShowAnime');
+                //self.setLocationEvent();
+            });
+        },
+        setLocationEvent : function(){
+            setTimeout(function(){
+                location.href = 'http://m.chiebukuro.yahoo.co.jp/'
+            },3000);
+        }
+    };
 
     window.yahooChat = yahooChat;
     $(function(){
