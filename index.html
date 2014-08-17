@@ -82,7 +82,7 @@
 <!-- 解答用ボタンテンプレート部分 -->
 <script id="tmpl_answerBtn" type="text/x-jsrender">
 	{{for data}}
-		<div class="css3button" data-category="{{>category}}" data-num="{{>dataNum}}" data-isLike="{{>isLike}}">{{:title}}</div>
+		<div class="css3button_{{>category}}" data-category="{{>category}}" data-num="{{>dataNum}}" data-isLike="{{>isLike}}"><p>{{:title}}</p></div>
 	{{/for}}
 </script>
 
