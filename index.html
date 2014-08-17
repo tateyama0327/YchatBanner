@@ -57,10 +57,8 @@
 					<p>{{:contents}}</p>
 				 </div>
 		{{else isStamp}}
-			<li class="right_bubble">
-				<div class="bubble_bg">
-					<p><img src="img/stamp/stamp1.png" width="200"></p>
-				 </div>			
+			<li class="left_bubble">
+				<p><img src="img/stamp/{{>stampName}}.png" width="200"></p>
 		{{else}}
 			<li class="left_bubble">
 				<img class="icon" src="img/yahooIcon_red.png"/>
@@ -77,7 +75,7 @@
 <!-- 解答用ボタンテンプレート部分 -->
 <script id="tmpl_answerBtn" type="text/x-jsrender">
 	{{for data}}
-		<div class="css3button" data-category="{{>category}}" data-num="{{>dataNum}}">{{:title}}</div>
+		<div class="css3button" data-category="{{>category}}" data-num="{{>dataNum}}" data-isLike="{{>isLike}}">{{:title}}</div>
 	{{/for}}
 </script>
 

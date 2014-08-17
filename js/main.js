@@ -27,6 +27,21 @@
                 //テンプレートにデータを渡して、レンダリングする
                 self.$template.render(_talkData)
             );
+        },
+        postStamp : function(options){
+            var self = this;
+            var _talkData = {};
+            _talkData.data = [];
+            _talkData.data.push({
+                isMytalk: options.isMytalk,
+                isStamp: true,
+                stampName: 'stamp1',
+                time: '18:30'
+            });
+            this.$output.append(
+                //テンプレートにデータを渡して、レンダリングする
+                self.$template.render(_talkData)
+            );
         }
     };
 
@@ -103,7 +118,7 @@
         init : function(options){
             $.extend(this, options);
         },
-        choiceComment : function(data){
+        choiceFirstComment : function(data){
             var self = this;
             var _renderData = {};
             _renderData.data = [];
@@ -119,7 +134,26 @@
                     self.$template.render(_renderData)
                 );
             }
-            this.setEvent('choiceComment');
+            this.setEvent('choiceFirstComment');
+        },
+        choiceSecondComment : function(data){
+            var self = this;
+            var _renderData = {};
+            _renderData.data = [];
+            for(var i = 0, len = data.length; i < len; i++){
+
+                _renderData.data.push({
+                    isMytalk: false,
+                    isStamp: true,
+                    title: data[i],
+                    isLike: i
+                });
+                this.$output.html(
+                    //テンプレートにデータを渡して、レンダリングする
+                    self.$template.render(_renderData)
+                );
+            }
+            this.setEvent('choiceSecondComment');
         },
         choiceQuestion : function(data){
                 var _rareQuestion = data.chatData.questionList.rareQuestion;
@@ -163,8 +197,10 @@
             this.$btnFeildEl.on('click',function(e){
                 if(choiceMode === 'choiceQuestion'){
                     yahooChat.controlFunc.answerBtnClickFunc(e.target);
+                }else if(choiceMode === 'choiceFirstComment'){
+                    yahooChat.controlFunc.comment1BtnClickFunc(e.target);
                 }else{
-                    yahooChat.controlFunc.commentBtnClickFunc(e.target);
+                    yahooChat.controlFunc.comment2BtnClickFunc(e.target);
                 }
             });
         },
@@ -199,7 +235,7 @@
                     contents: data.chatData.ranger.red.talk[0].talkText
                 });
             },500,function(){
-                self.answerBtnFunc.choiceComment(data.chatData.commentList.comment1);
+                self.answerBtnFunc.choiceFirstComment(data.chatData.commentList.comment1);
             });
         },
         postTimeFunc : function(func,sec,callback){
@@ -214,6 +250,10 @@
             var self = this;
             var _choiceData = this.jsonData.chatData.questionList[target.getAttribute('data-category')][target.getAttribute('data-num')];
             //ヤフレンジャーのだれかが言葉を話す。
+            self.yahooFunc.postMessage({
+                isMytalk: true,
+                contents: _choiceData.title
+            });
             this.postTimeFunc(function(){
                 self.yahooFunc.postMessage({
                     isMytalk: false,
@@ -225,8 +265,10 @@
                     contents: _choiceData.answer[0]
                 });
             });
+
+            self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
         },
-        commentBtnClickFunc : function(target){
+        comment1BtnClickFunc : function(target){
             var self = this;
             this.postTimeFunc(function(){
                 self.yahooFunc.postMessage({
@@ -240,6 +282,27 @@
             },500,function(){
                 self.answerBtnFunc.choiceQuestion(self.jsonData);
             });
+        },
+        comment2BtnClickFunc : function(target){
+            var self = this;
+            var _choiceData = target.getAttribute('data-isLike');
+            if(_choiceData === '0'){ //気に入った場合
+
+                console.log('気に入った！');
+
+            }else{ //気に食わなかった場合
+
+                this.postTimeFunc(function(){
+                    self.yahooFunc.postStamp({
+                        isStamp: true,
+                        stampName: 'stamp1',
+                        time: '18:30'
+                    });
+                },500,function(){
+
+                });
+
+            }
         }
     };
 
