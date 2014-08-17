@@ -216,57 +216,50 @@
         },
         firstChat : function(data){
             var self = this;
-            this.postTimeFunc(function(){
-                self.yahooFunc.postMessage({
-                    isMytalk: false,
-                    contents: data.chatData.ranger.red.talk[0].talkText
-                });
-            },500,function(){
+            var _setData = [
+            {
+                isMytalk: false,
+                contents: data.chatData.ranger.red.talk[0].talkText
+            }
+            ];
+            this.commentPostFunc(_setData,1500,function(){
                 self.answerBtnFunc.choiceFirstComment(data.chatData.commentList.comment1);
             });
-        },
-        postTimeFunc : function(func,sec,callback){
-            setTimeout(function(){
-                func();
-                setTimeout(function(){
-                    callback();
-                },sec);
-            },sec);
         },
         answerBtnClickFunc : function(target){
             var self = this;
             var _choiceData = this.jsonData.chatData.questionList[target.getAttribute('data-category')][target.getAttribute('data-num')];
-            //ヤフレンジャーのだれかが言葉を話す。
-            self.yahooFunc.postMessage({
+            var _setData = [
+            {
                 isMytalk: true,
                 contents: _choiceData.title
+            },
+            {
+                isMytalk: false,
+                contents: self.jsonData.chatData.ranger.pink.talk[0].talkText
+            },
+            {
+                isMytalk: false,
+                contents: _choiceData.answer[0]
+            }
+            ];
+            this.commentPostFunc(_setData,1500,function(){
+                self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
             });
-            this.postTimeFunc(function(){
-                self.yahooFunc.postMessage({
-                    isMytalk: false,
-                    contents: self.jsonData.chatData.ranger.pink.talk[0].talkText
-                });
-            },500,function(){
-                self.yahooFunc.postMessage({
-                    isMytalk: false,
-                    contents: _choiceData.answer[0]
-                });
-            });
-
-            self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
         },
         comment1BtnClickFunc : function(target){
             var self = this;
-            this.postTimeFunc(function(){
-                self.yahooFunc.postMessage({
-                    isMytalk: true,
-                    contents: target.innerHTML
-                });
-                self.yahooFunc.postMessage({
-                    isMytalk: false,
-                    contents: self.jsonData.chatData.ranger.red.talk[1].talkText
-                });
-            },500,function(){
+            var _setData = [
+            {
+                isMytalk: true,
+                contents: target.innerHTML
+            },
+            {
+                isMytalk: false,
+                contents: self.jsonData.chatData.ranger.red.talk[1].talkText
+            }
+            ];
+            this.commentPostFunc(_setData,1500,function(){
                 self.answerBtnFunc.choiceQuestion(self.jsonData);
             });
         },
@@ -278,18 +271,21 @@
                 console.log('気に入った！');
 
             }else{ //気に食わなかった場合
-
-                this.postTimeFunc(function(){
-                    self.yahooFunc.postMessage({
-                        isMytalk: false,
-                        isStamp: true,
-                        stampName: 'stamp2',
-                        time: '18:30'
-                    });
-                },500,function(){
-                    self.commentDontLikeRoop();
+                var _setData = [
+                {
+                    isMytalk: false,
+                    isStamp: true,
+                    stampName: 'stamp2'
+                },
+                {
+                    isMytalk: false,
+                    isStamp: false,
+                    contents: 'そんな！ひどい。。'
+                }
+                ];
+                this.commentPostFunc(_setData,1500,function(){
+                    this.commentDontLikeRoop();
                 });
-
             }
         },
         commentDontLikeRoop : function(){
@@ -300,16 +296,23 @@
             });
         },
         commentPostFunc : function(optionList,sec,callback){
+            //リストできたチャット情報を順番にながす。最後にcallbackを実行
             var _cnt = 0;
             var self = this;
             (function() {
-
+                self.yahooFunc.postMessage({
+                    isMytalk: optionList[_cnt].isMytalk,
+                    isStamp: optionList[_cnt].isStamp,
+                    stampName: optionList[_cnt].stampName,
+                    contents: optionList[_cnt].contents,
+                    time: '18:30'
+                });
+                _cnt += 1;
                 if (_cnt < optionList.length) {
                     setTimeout(arguments.callee, sec);
                 }else{
                     callback();
                 }
-                _cnt += 1;
             })();
         }
     };
