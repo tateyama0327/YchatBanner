@@ -159,6 +159,7 @@
             this.setEvent('choiceQuestion');
         },
         setEvent : function(choiceMode){
+            this.$btnFeildEl.off();
             this.$btnFeildEl.on('click',function(e){
                 if(choiceMode === 'choiceQuestion'){
                     yahooChat.controlFunc.answerBtnClickFunc(e.target);
