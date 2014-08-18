@@ -37,7 +37,7 @@
     yahooChat.yahooPostFunc = {
         init : function(options){
             this.appendCnt = 0;
-            this.balloonSumHeight = 170;
+            this.balloonSumHeight = 89;
             $.extend(this, options);
         },
         postMessage : function(options){
@@ -70,10 +70,10 @@
         },
         showAnime : function(){
             if(this.appendCnt != 0){
-                var _scrollEl = this.$output.find('.balloonShowAnime').eq(this.appendCnt).offset().top+100;
-                $('html,body').animate({ scrollTop: _scrollEl }, 'fast');
-                console.warn('aaa');
-                this.balloonSumHeight += this.$output.find('.balloonShowAnime').eq(this.appendCnt).height();
+                // var _scrollEl = this.$output.find('.balloonShowAnime').eq(this.appendCnt).offset().top+100;
+                // $('html,body').animate({ scrollTop: _scrollEl }, 'fast');
+                console.warn('this.appendCnt'+this.appendCnt,'高さ'+this.$output.find('.balloonShowAnime').eq(this.appendCnt).outerHeight(true));
+                this.balloonSumHeight += this.$output.find('.balloonShowAnime').eq(this.appendCnt).outerHeight(true);
             }
         }
     };
@@ -102,7 +102,7 @@
                 );
             }
             this.setEvent('choiceFirstComment');
-            this.showFixedFeild();
+            this.showFixedFeild(2);
         },
         choiceSecondComment : function(data){
             var self = this;
@@ -124,7 +124,7 @@
                 );
             }
             this.setEvent('choiceSecondComment');
-            this.showFixedFeild();
+            this.showFixedFeild(2);
         },
         choiceQuestion : function(data){
                 var _rareQuestion = data.chatData.questionList.rareQuestion;
@@ -162,7 +162,7 @@
                 self.$template.render(_renderData)
             );
             this.setEvent('choiceQuestion');
-            this.showFixedFeild();
+            this.showFixedFeild(3);
         },
         setEvent : function(choiceMode){
             var self = this;
@@ -185,7 +185,7 @@
         showFixedFeild : function(){
             this.$fixedFeildEl.css('bottom','0px');
             console.warn(yahooChat.yahooPostFunc.balloonSumHeight);
-            var _feildHeight = this.$fixedFeildEl.height();
+            var _feildHeight = this.$fixedFeildEl.outerHeight(true);
             this.$bubbleListsEl.css('height',_feildHeight+yahooChat.yahooPostFunc.balloonSumHeight+'px');
         },
         hideFixedFeild : function(){
@@ -419,7 +419,6 @@
             }else{
                 _isLike = false;
             }
-            console.warn(self.jsonData);
             var _setData = [
             {
                 isMytalk: false,
