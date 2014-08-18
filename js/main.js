@@ -37,6 +37,7 @@
     yahooChat.yahooPostFunc = {
         init : function(options){
             this.appendCnt = 0;
+            this.balloonSumHeight = 170;
             $.extend(this, options);
         },
         postMessage : function(options){
@@ -71,7 +72,8 @@
             if(this.appendCnt != 0){
                 var _scrollEl = this.$output.find('.balloonShowAnime').eq(this.appendCnt).offset().top+100;
                 $('html,body').animate({ scrollTop: _scrollEl }, 'fast');
-                return false;
+                console.warn('aaa');
+                this.balloonSumHeight += this.$output.find('.balloonShowAnime').eq(this.appendCnt).height();
             }
         }
     };
@@ -181,21 +183,15 @@
             return Math.floor(Math.random()*(max-min)+min);
         },
         showFixedFeild : function(){
-            // アンサーボタンステージの表示関数
-            var _feildHeight = this.$fixedFeildEl.height();
-            var _originHeight = this.$bubbleListsEl.height();
-            console.warn(_feildHeight,_originHeight);
             this.$fixedFeildEl.css('bottom','0px');
-            this.$bubbleListsEl.css('height',_feildHeight+_originHeight+'px');
+            console.warn(yahooChat.yahooPostFunc.balloonSumHeight);
+            var _feildHeight = this.$fixedFeildEl.height();
+            this.$bubbleListsEl.css('height',_feildHeight+yahooChat.yahooPostFunc.balloonSumHeight+'px');
         },
         hideFixedFeild : function(){
             // アンサーボタンステージの表示関数
             this.$fixedFeildEl.css('bottom','-200px');
-        },
-        scrollPageFunc : function(){
-        //ページ内スクロール
-            var p = $(".content").eq(i).offset().top;
-            $('html,body').animate({ scrollTop: p }, 'fast');
+            this.$bubbleListsEl.css('height','auto');
         }
     };
 
@@ -263,7 +259,9 @@
             }
             ];
             this.commentPostFunc(_setData,1500,function(){
-                self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
+                setTimeout(function(){
+                    self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
+                },1500);
             });
         },
         comment1BtnClickFunc : function(target){
@@ -355,7 +353,9 @@
                 }
                 ];
                 this.commentPostFunc(_setData,1500,function(){
-                    self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
+                    setTimeout(function(){
+                        self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
+                    },1500);
                 });
             }else{
                 this.LoopEndFunc('dontLike');
@@ -454,8 +454,6 @@
             this.$displayWrap.removeClass('alphaShowAnime');
             this.$displayWrap.addClass('alphaHideAnime');
             this.$displayWrap.on('webkitAnimationEnd',function(){
-                $('html,body').animate({ scrollTop: 0 }, 'fast');
-                self.$displayWrap.remove();
                 self.$lastCut.addClass('alphaShowAnime');
                 self.setLocationEvent();
             });
