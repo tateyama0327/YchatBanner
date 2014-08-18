@@ -72,7 +72,6 @@
             if(this.appendCnt != 0){
                 var _scrollEl = this.$output.find('.balloonShowAnime').eq(this.appendCnt).offset().top+100;
                 $('html,body').animate({ scrollTop: _scrollEl }, 'fast');
-                console.warn('this.appendCnt'+this.appendCnt,'高さ'+this.$output.find('.balloonShowAnime').eq(this.appendCnt).outerHeight(true));
                 this.balloonSumHeight += this.$output.find('.balloonShowAnime').eq(this.appendCnt).outerHeight(true);
             }
         }
@@ -129,16 +128,22 @@
                 var _renderData = {};
                 _renderData.data = [];
                 for(var i = 0, len = 3; i < len; i++){
-                    var _randomNum = this.randomNum(3,0);
+                    var _rareQrandomNum = this.randomNum(7,0);
+                    var _triviaQrandomNum = this.randomNum(3,0);
+                    var _seriousQrandomNum = this.randomNum(4,0);
+                    var _randomNum;
                     if(i === 0){
-                        _titleText = _rareQuestion[_randomNum].title;
+                        _titleText = _rareQuestion[_rareQrandomNum].title;
                         _categoryText = 'rareQuestion';
+                        _randomNum = _rareQrandomNum;
                     }else if(i === 1){
-                        _titleText = _triviaQuestion[_randomNum].title;
+                        _titleText = _triviaQuestion[_triviaQrandomNum].title;
                         _categoryText = 'triviaQuestion';
+                        _randomNum = _triviaQrandomNum;
                     }else{
-                        _titleText = _seriousQuestion[_randomNum].title;
+                        _titleText = _seriousQuestion[_seriousQrandomNum].title;
                         _categoryText = 'seriousQuestion';
+                        _randomNum = _seriousQrandomNum;
                     }
                     _renderData.data.push({
                         title: _titleText,
@@ -174,7 +179,6 @@
         },
         showFixedFeild : function(){
             this.$fixedFeildEl.css('bottom','0px');
-            console.warn(yahooChat.yahooPostFunc.balloonSumHeight);
             var _feildHeight = this.$fixedFeildEl.outerHeight(true);
             this.$bubbleListsEl.css('height',_feildHeight+yahooChat.yahooPostFunc.balloonSumHeight+'px');
         },
