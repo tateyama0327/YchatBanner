@@ -223,7 +223,7 @@
                 isMytalk: false,
                 rangerName: 'レッド',
                 rangerColor: 'red',
-                contents: data.chatData.ranger.red.talk[0].talkText
+                contents: 'オッス！オラ！Yahoo! レッド！'
             }
             ];
             this.commentPostFunc(_setData,1500,function(){
@@ -247,7 +247,14 @@
             },
             {
                 isMytalk: false,
-                contents: self.jsonData.chatData.ranger.pink.talk[0].talkText,
+                contents: 'ピンクにまかせて♥︎',
+                rangerName: 'ピンク',
+                rangerColor: 'pink'
+            },
+            {
+                isMytalk: false,
+                isStamp: true,
+                stampName: 'pink_good',
                 rangerName: 'ピンク',
                 rangerColor: 'pink'
             },
@@ -274,7 +281,7 @@
             },
             {
                 isMytalk: false,
-                contents: self.jsonData.chatData.ranger.red.talk[1].talkText,
+                contents: 'オラを呼んだってことは、なんか悩みあるんじゃねーのか？どんな悩みでも、俺たちヤフレンジャーが答えを導くぜっ！',
                 rangerName: 'レッド',
                 rangerColor: 'red'
             }
@@ -322,43 +329,94 @@
             if((this.choiceData.answer.length-1) != this.loopCnt){
                 //ループをカウント
                 this.loopCnt++;
+                if(this.loopCnt === 1){
+                    var _setData = [
+                    {
+                        isMytalk: false,
+                        isStamp: false,
+                        contents: 'そんな！ひどい。。',
+                        rangerName: 'ピンク',
+                        rangerColor: 'pink'
+                    },
+                    {
+                        isMytalk: false,
+                        isStamp: false,
+                        contents: 'ワンワン！（おじさんの回答に任せるんだ）',
+                        rangerName: 'ホワイト',
+                        rangerColor: 'white'
+                    },
+                    {
+                        isMytalk: false,
+                        isStamp: true,
+                        stampName: 'white_good',
+                        rangerName: 'ホワイト',
+                        rangerColor: 'white'
+                    },
+                    {
+                        isMytalk: false,
+                        isStamp: false,
+                        contents: this.choiceData.answer[this.loopCnt],
+                        rangerName: 'ホワイト',
+                        rangerColor: 'white'
+                    }
+                    ];
+                    this.commentPostFunc(_setData,1500,function(){
+                        setTimeout(function(){
+                            self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
+                        },1500);
+                    });
+                }else{
+                    var _setData = [
+                    {
+                        isMytalk: false,
+                        isStamp: false,
+                        contents: 'クゥーン。。（そりゃないぜ）',
+                        rangerName: 'ホワイト',
+                        rangerColor: 'white'
+                    },
+                    {
+                        isMytalk: false,
+                        isStamp: false,
+                        contents: 'オレ オマエノ ナヤミ ナクシテヤル！',
+                        rangerName: 'グリーン',
+                        rangerColor: 'green'
+                    },
+                    {
+                        isMytalk: false,
+                        isStamp: true,
+                        stampName: 'greed_funny',
+                        rangerName: 'グリーン',
+                        rangerColor: 'green'
+                    },
+                    {
+                        isMytalk: false,
+                        isStamp: false,
+                        contents: this.choiceData.answer[this.loopCnt],
+                        rangerName: 'グリーン',
+                        rangerColor: 'green'
+                    }
+                    ];
+                    this.commentPostFunc(_setData,1500,function(){
+                        setTimeout(function(){
+                            self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
+                        },1500);
+                    });
+                }
+            }else{
                 var _setData = [
                 {
                     isMytalk: false,
-                    isStamp: true,
-                    stampName: 'stamp2',
-                    rangerName: 'ピンク',
-                    rangerColor: 'pink'
-                },
-                {
-                    isMytalk: false,
                     isStamp: false,
-                    contents: 'そんな！ひどい。。',
-                    rangerName: 'ピンク',
-                    rangerColor: 'pink'
-                },
-                {
-                    isMytalk: false,
-                    isStamp: false,
-                    contents: 'この回答ならどうかしら！',
-                    rangerName: 'ピンク',
-                    rangerColor: 'pink'
-                },
-                {
-                    isMytalk: false,
-                    isStamp: false,
-                    contents: this.choiceData.answer[this.loopCnt],
-                    rangerName: 'ピンク',
-                    rangerColor: 'pink'
+                    contents: 'オレ オマエ スクエナイ。。',
+                    rangerName: 'グリーン',
+                    rangerColor: 'green'
                 }
                 ];
                 this.commentPostFunc(_setData,1500,function(){
                     setTimeout(function(){
-                        self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
+                        self.LoopEndFunc('dontLike');
                     },1500);
                 });
-            }else{
-                this.LoopEndFunc('dontLike');
             }
         },
         commentLoopFunc : function(){
@@ -424,7 +482,7 @@
                 isMytalk: false,
                 rangerName: 'レッド',
                 rangerColor: 'red',
-                contents: self.jsonData.chatData.ranger.red.talk[2].talkText
+                contents: '君の悩みに、我々の知恵が貸せてよかった！'
             }
             ];
             this.commentPostFunc(_setData,1500,function(){
