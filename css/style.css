@@ -735,7 +735,7 @@ a {
   /* W3C */
 }
 .fixedBanner img {
-  margin-left: 2px;
+  margin-left: 0px;
 }
 .fixedBanner img:nth-child(2) {
   margin-left: 0;
