@@ -276,9 +276,7 @@
             }
             ];
             this.commentPostFunc(_setData,1500,function(){
-//                setTimeout(function(){
-                    self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
-//                },1500);
+                self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
             });
         },
         comment1BtnClickFunc : function(target){
