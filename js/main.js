@@ -70,8 +70,8 @@
         },
         showAnime : function(){
             if(this.appendCnt != 0){
-                // var _scrollEl = this.$output.find('.balloonShowAnime').eq(this.appendCnt).offset().top+100;
-                // $('html,body').animate({ scrollTop: _scrollEl }, 'fast');
+                var _scrollEl = this.$output.find('.balloonShowAnime').eq(this.appendCnt).offset().top+100;
+                $('html,body').animate({ scrollTop: _scrollEl }, 'fast');
                 console.warn('this.appendCnt'+this.appendCnt,'高さ'+this.$output.find('.balloonShowAnime').eq(this.appendCnt).outerHeight(true));
                 this.balloonSumHeight += this.$output.find('.balloonShowAnime').eq(this.appendCnt).outerHeight(true);
             }
