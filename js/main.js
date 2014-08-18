@@ -90,11 +90,7 @@
             for(var i = 0, len = data.length; i < len; i++){
 
                 _renderData.data.push({
-                    isMytalk: false,
-                    isStamp: true,
-                    title: data[i],
-                    rangerName: 'レッド',
-                    rangerColor: 'red'
+                    title: data[i]
                 });
                 this.$output.html(
                     //テンプレートにデータを渡して、レンダリングする
@@ -102,7 +98,7 @@
                 );
             }
             this.setEvent('choiceFirstComment');
-            this.showFixedFeild(2);
+            this.showFixedFeild();
         },
         choiceSecondComment : function(data){
             var self = this;
@@ -111,12 +107,8 @@
             for(var i = 0, len = data.length; i < len; i++){
 
                 _renderData.data.push({
-                    isMytalk: false,
-                    isStamp: true,
                     title: data[i],
-                    isLike: i,
-                    rangerName: 'レッド',
-                    rangerColor: 'red'
+                    isLike: i
                 });
                 this.$output.html(
                     //テンプレートにデータを渡して、レンダリングする
@@ -124,7 +116,7 @@
                 );
             }
             this.setEvent('choiceSecondComment');
-            this.showFixedFeild(2);
+            this.showFixedFeild();
         },
         choiceQuestion : function(data){
                 var _rareQuestion = data.chatData.questionList.rareQuestion;
@@ -149,8 +141,6 @@
                         _categoryText = 'seriousQuestion';
                     }
                     _renderData.data.push({
-                        isMytalk: false,
-                        isStamp: true,
                         title: _titleText,
                         category: _categoryText,
                         dataNum: _randomNum
@@ -162,7 +152,7 @@
                 self.$template.render(_renderData)
             );
             this.setEvent('choiceQuestion');
-            this.showFixedFeild(3);
+            this.showFixedFeild();
         },
         setEvent : function(choiceMode){
             var self = this;
@@ -266,9 +256,9 @@
             }
             ];
             this.commentPostFunc(_setData,1500,function(){
-                setTimeout(function(){
+//                setTimeout(function(){
                     self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
-                },1500);
+//                },1500);
             });
         },
         comment1BtnClickFunc : function(target){
@@ -304,7 +294,9 @@
                 }
                 ];
                 this.commentPostFunc(_setData,1500,function(){
-                    self.LoopEndFunc('like');
+                    setTimeout(function(){
+                        self.LoopEndFunc('like');
+                    },1500);
                 });
 
 
@@ -318,7 +310,9 @@
                 }
                 ];
                 this.commentPostFunc(_setData,1500,function(){
-                    self.commentDontLikeLoop();
+                    setTimeout(function(){
+                        self.commentDontLikeLoop();
+                    },1500);
                 });
 
             }
@@ -355,15 +349,13 @@
                     {
                         isMytalk: false,
                         isStamp: false,
-                        contents: this.choiceData.answer[this.loopCnt],
+                        contents: 'ワンワン('+this.choiceData.answer[this.loopCnt]+')',
                         rangerName: 'ホワイト',
                         rangerColor: 'white'
                     }
                     ];
                     this.commentPostFunc(_setData,1500,function(){
-                        setTimeout(function(){
-                            self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
-                        },1500);
+                        self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
                     });
                 }else{
                     var _setData = [
@@ -384,7 +376,7 @@
                     {
                         isMytalk: false,
                         isStamp: true,
-                        stampName: 'greed_funny',
+                        stampName: 'green_good',
                         rangerName: 'グリーン',
                         rangerColor: 'green'
                     },
@@ -397,9 +389,7 @@
                     }
                     ];
                     this.commentPostFunc(_setData,1500,function(){
-                        setTimeout(function(){
-                            self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
-                        },1500);
+                        self.answerBtnFunc.choiceSecondComment(self.jsonData.chatData.commentList.comment2);
                     });
                 }
             }else{
@@ -418,35 +408,6 @@
                     },1500);
                 });
             }
-        },
-        commentLoopFunc : function(){
-            var self = this;
-            var _setData = [
-            {
-                isMytalk: false,
-                isStamp: true,
-                stampName: 'stamp2',
-                rangerName: 'ピンク',
-                rangerColor: 'pink'
-            },
-            {
-                isMytalk: false,
-                isStamp: false,
-                contents: 'まだ。。納得出来ないの(ノд・。) ',
-                rangerName: 'ピンク',
-                rangerColor: 'pink'
-            },
-            {
-                isMytalk: false,
-                isStamp: false,
-                contents: 'この回答ならどうかしら！',
-                rangerName: 'ピンク',
-                rangerColor: 'pink'
-            }
-            ];
-            this.commentPostFunc(_setData,1500,function(){
-                self.commentDontLikeLoop();
-            });
         },
         commentPostFunc : function(optionList,sec,callback){
             //リストできたチャット情報を順番にながす。最後にcallbackを実行
@@ -473,18 +434,44 @@
             var self = this;
             var _isLike;
             if(type === 'like'){
+                switch (this.loopCnt){
+                  case 0:
+                    var stampRanger = 'pink_funny';
+                    break;
+                  case 1:
+                    var stampRanger = 'white_funny';
+                    break;
+                  case 2:
+                    var stampRanger = 'green_funny';
+                    break;
+                  default:
+                    break;
+                }
                 _isLike = true;
+                var _setData = [
+                {
+                    isMytalk: false,
+                    isStamp: true,
+                    stampName: stampRanger
+                },
+                {
+                    isMytalk: false,
+                    rangerName: 'レッド',
+                    rangerColor: 'red',
+                    contents: '君の悩みに、我々の知恵が貸せてよかった！'
+                }
+                ];
             }else{
                 _isLike = false;
+                var _setData = [
+                {
+                    isMytalk: false,
+                    rangerName: 'ブルー',
+                    rangerColor: 'blue',
+                    contents: '残念だ…俺達って、ふがいねえな…'
+                }
+                ];
             }
-            var _setData = [
-            {
-                isMytalk: false,
-                rangerName: 'レッド',
-                rangerColor: 'red',
-                contents: '君の悩みに、我々の知恵が貸せてよかった！'
-            }
-            ];
             this.commentPostFunc(_setData,1500,function(){
                 setTimeout(function(){
                     yahooChat.endingFunc.init({
@@ -511,7 +498,6 @@
             this.$displayWrap.removeClass('alphaShowAnime');
             this.$displayWrap.addClass('alphaHideAnime');
             this.$displayWrap.on('webkitAnimationEnd',function(){
-                self.$lastCut.addClass('alphaShowAnime');
                 self.setLocationEvent();
             });
         },
