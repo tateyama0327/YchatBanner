@@ -5,8 +5,6 @@
     yahooChat.displayFunc = {
         init : function(options){
             $('html,body').animate({ scrollTop: 0 }, 'fast');
-            // $.extend(this, options);
-            // this.$contentEl.css( "height" , ($(window).height()-113) );
         }
     };
 
