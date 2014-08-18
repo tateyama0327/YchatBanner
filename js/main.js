@@ -504,7 +504,7 @@
         setLocationEvent : function(){
             setTimeout(function(){
                 location.href = 'http://m.chiebukuro.yahoo.co.jp/'
-            },3000);
+            },5000);
         }
     };
 
