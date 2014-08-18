@@ -239,6 +239,18 @@
             },
             {
                 isMytalk: false,
+                contents: 'それがキミの質問か！',
+                rangerName: 'レッド',
+                rangerColor: 'red'
+            },
+            {
+                isMytalk: false,
+                contents: 'よし！行け、ピンク！',
+                rangerName: 'レッド',
+                rangerColor: 'red'
+            },
+            {
+                isMytalk: false,
                 contents: 'ピンクにまかせて♥︎',
                 rangerName: 'ピンク',
                 rangerColor: 'pink'
@@ -253,6 +265,12 @@
             {
                 isMytalk: false,
                 contents: _choiceData.answer[0],
+                rangerName: 'ピンク',
+                rangerColor: 'pink'
+            },
+            {
+                isMytalk: false,
+                contents: 'これでどうかしら？',
                 rangerName: 'ピンク',
                 rangerColor: 'pink'
             }
