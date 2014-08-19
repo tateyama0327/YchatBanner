@@ -935,6 +935,77 @@ a {
     opacity: 1;
   }
 }
+.redTopIcon {
+  opacity: 0;
+}
+.redComment {
+  opacity: 0;
+}
+.redShowAnime {
+  opacity: 1;
+  -webkit-animation: redShowAnime 0.5s;
+  animation: redShowAnime 0.5s;
+}
+@-webkit-keyframes redShowAnime {
+  0% {
+    -webkit-transform: translate(0px, 30px);
+    opacity: 0;
+  }
+  50% {
+    -webkit-transform: translate(0px, -10px);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    opacity: 1;
+  }
+}
+.redBounceAnime {
+  -webkit-animation: redBounceAnime 2s linear infinite;
+  animation: redBounceAnime 3s linear infinite;
+}
+@-webkit-keyframes redBounceAnime {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  5% {
+    -webkit-transform: rotate(-10deg);
+  }
+  10% {
+    -webkit-transform: rotate(10deg);
+  }
+  15% {
+    -webkit-transform: rotate(-10deg);
+  }
+  20% {
+    -webkit-transform: rotate(10deg);
+  }
+  25% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+  }
+}
+.redCommentShowAnime {
+  opacity: 1;
+  -webkit-animation: redCommentShowAnime 0.5s;
+  animation: redCommentShowAnime 0.5s;
+}
+@-webkit-keyframes redCommentShowAnime {
+  0% {
+    -webkit-transform: translate(30px, 0px);
+    opacity: 0;
+  }
+  50% {
+    -webkit-transform: translate(-10px, 0px);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translate(0px, 0px);
+    opacity: 1;
+  }
+}
 #lastCut {
   position: fixed;
   top: 0;

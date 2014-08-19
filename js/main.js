@@ -12,11 +12,25 @@
     yahooChat.introFunc = {
         init : function(options){
             $.extend(this, options);
-            this.setEvent();
+            var self = this;
+            setTimeout(function(){
+                self.showAnime();
+            },1500);
+        },
+        showAnime : function(){
+            var self = this;
+            this.$redTopIcon.addClass('redShowAnime');
+            this.$redTopIcon.on('webkitAnimationEnd',function(){
+                $(this).off();
+                self.$redComment.addClass('redCommentShowAnime');
+                self.$redTopIcon.addClass('redBounceAnime');
+                self.setEvent();
+            });
         },
         setEvent : function(){
             var self = this;
             this.$fixedBanner.on('click',function(){
+                $(this).off();
                 self.$yahooHome.addClass('alphaHideAnime');
                 self.$yahooHome.on('webkitAnimationEnd',function(){
                     self.$yahooHome.remove();
@@ -272,7 +286,8 @@
                 isMytalk: false,
                 contents: 'これでどうかしら？',
                 rangerName: 'ピンク',
-                rangerColor: 'pink'
+                rangerColor: 'pink',
+                delayTime: 3000
             }
             ];
             this.commentPostFunc(_setData,1500,function(){
@@ -442,7 +457,11 @@
                 });
                 _cnt += 1;
                 if (_cnt < optionList.length) {
-                    setTimeout(arguments.callee, sec);
+                    if(optionList[_cnt].hasOwnProperty('delayTime')){
+                        setTimeout(arguments.callee, optionList[_cnt].delayTime);
+                    }else{
+                        setTimeout(arguments.callee, sec);
+                    }
                 }else{
                     callback();
                 }
@@ -553,7 +572,9 @@
         yahooChat.introFunc.init({
             $displayWrap : $('.displayWrap'),
             $yahooHome : $('.yahooHome'),
-            $fixedBanner : $('.fixedBanner')
+            $fixedBanner : $('.fixedBanner'),
+            $redTopIcon : $('.redTopIcon'),
+            $redComment : $('.redComment')
         });
 
     });
